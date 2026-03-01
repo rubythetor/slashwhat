@@ -1,0 +1,323 @@
+<!-- © 2026 slashwhat. MIT License. -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started with Subnet Planning — slashwhat</title>
+  <meta name="description" content="Learn CIDR notation and subnet planning with slashwhat. Step-by-step guide to splitting networks, understanding prefix lengths, and planning IP address space for IPv4 and IPv6.">
+  <link rel="canonical" href="https://slashwhat.net/getting-started.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://slashwhat.net/getting-started.html">
+  <meta property="og:title" content="Getting Started with Subnet Planning — slashwhat">
+  <meta property="og:description" content="Learn CIDR notation and subnet planning. Step-by-step guide to splitting networks and planning IP address space.">
+  <meta property="og:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="og:site_name" content="slashwhat">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Getting Started with Subnet Planning — slashwhat">
+  <meta name="twitter:description" content="Learn CIDR notation and subnet planning with this step-by-step guide.">
+  <meta name="twitter:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="article:published_time" content="2025-02-01">
+  <meta name="keywords" content="CIDR tutorial, subnet planning guide, learn subnetting, prefix length, IPv4 subnetting, IPv6 subnetting, network basics">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Getting Started with Subnet Planning — slashwhat",
+    "description": "Learn CIDR notation and subnet planning with slashwhat. Step-by-step guide to splitting networks, understanding prefix lengths, and planning IP address space.",
+    "url": "https://slashwhat.net/getting-started.html",
+    "isPartOf": { "@type": "WebApplication", "name": "slashwhat", "url": "https://slashwhat.net/" }
+  }
+  </script>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <div class="app-header-left">
+      <a href="index.html" class="about-logo-link">
+        <img src="img/logo.png" alt="slashwhat" class="app-logo">
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="back-to-app">&larr; Return to app</a>
+    </div>
+  </header>
+
+  <main class="about-content">
+
+    <h1 class="about-title">Getting Started</h1>
+
+    <nav class="tab-bar" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="cidr">What is CIDR?</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="first-split">Your First Split</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="features">Features</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="tips">Tips</button>
+    </nav>
+
+    <!-- ══════════════════════════════════════════ WHAT IS CIDR? ══════ -->
+    <section class="tab-panel active" id="panel-cidr" role="tabpanel">
+      <h2>CIDR notation in plain language</h2>
+      <p>
+        CIDR (Classless Inter-Domain Routing) is the standard way to describe a
+        block of IP addresses. It looks like this: <code>192.168.0.0/24</code>.
+        The part before the slash is the starting address. The number after the
+        slash tells you how many bits are locked as the "network" portion.
+      </p>
+      <p>
+        The remaining bits are yours to assign to devices. A <code>/24</code>
+        locks the first 24 of 32 bits, leaving 8 bits free &mdash; that gives
+        you 2<sup>8</sup> = 256 addresses. A <code>/16</code> locks 16 bits and
+        leaves 16, giving you 65,536 addresses.
+      </p>
+
+      <div class="concept-card">
+        <h3>The key idea: prefix length controls block size</h3>
+        <p>
+          Every time you add one bit to the prefix, you cut the block in half.
+          A <code>/24</code> has 256 addresses. A <code>/25</code> has 128.
+          A <code>/26</code> has 64. This halving is exactly what the
+          <strong>Split</strong> button does in slashwhat &mdash; it takes one
+          block and divides it into two equal halves by increasing the prefix
+          length by one.
+        </p>
+      </div>
+
+      <h3>Common prefix lengths</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Prefix</th><th class="num">Addresses</th><th>Netmask</th><th>Common Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/8</code></td><td class="num">16,777,216</td><td><code>255.0.0.0</code></td><td>Large enterprise or ISP allocation</td></tr>
+          <tr><td><code>/16</code></td><td class="num">65,536</td><td><code>255.255.0.0</code></td><td>Campus or regional network</td></tr>
+          <tr><td><code>/20</code></td><td class="num">4,096</td><td><code>255.255.240.0</code></td><td>Cloud VPC default (AWS, GCP)</td></tr>
+          <tr><td><code>/24</code></td><td class="num">256</td><td><code>255.255.255.0</code></td><td>Standard LAN subnet</td></tr>
+          <tr><td><code>/28</code></td><td class="num">16</td><td><code>255.255.255.240</code></td><td>Small server segment</td></tr>
+          <tr><td><code>/30</code></td><td class="num">4</td><td><code>255.255.255.252</code></td><td>Point-to-point link</td></tr>
+          <tr><td><code>/32</code></td><td class="num">1</td><td><code>255.255.255.255</code></td><td>Single host route</td></tr>
+        </tbody>
+      </table>
+
+      <div class="concept-card">
+        <h3>IPv6 works the same way</h3>
+        <p>
+          IPv6 addresses are 128 bits instead of 32, but the CIDR notation is
+          identical. <code>2001:db8::/48</code> means the first 48 bits are the
+          network, leaving 80 bits for hosts. slashwhat handles both IPv4 and
+          IPv6 &mdash; just type either format into the input.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ YOUR FIRST SPLIT ══════ -->
+    <section class="tab-panel" id="panel-first-split" role="tabpanel">
+      <h2>Walk through your first split</h2>
+      <p>
+        This guide uses <code>192.168.0.0/24</code> as an example &mdash; a
+        standard 256-address subnet that most network engineers work with daily.
+      </p>
+
+      <div class="concept-card">
+        <h3>Step 1: Enter a CIDR block</h3>
+        <p>
+          Type <code>192.168.0.0/24</code> into the input field at the top of
+          the page and press Enter. The app creates a table with a single row
+          showing the full /24 block: 256 total addresses, 254 usable (the
+          network and broadcast addresses are reserved).
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Step 2: Split</h3>
+        <p>
+          Click the green <strong>Split</strong> link on the right side of the
+          row. The /24 divides into two /25 subnets:
+        </p>
+        <ul class="feature-list">
+          <li><code>192.168.0.0/25</code> &mdash; 128 addresses (0 to 127)</li>
+          <li><code>192.168.0.128/25</code> &mdash; 128 addresses (128 to 255)</li>
+        </ul>
+        <p>
+          Each half is exactly half of the original. The math is always precise
+          because splitting just adds one bit to the prefix length.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Step 3: Split again</h3>
+        <p>
+          Click <strong>Split</strong> on the first /25. It becomes two /26 subnets
+          with 64 addresses each. You can keep splitting as deep as the address
+          space allows &mdash; all the way down to /32 (a single host).
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Step 4: Join</h3>
+        <p>
+          See the red <strong>Join</strong> bar on the left side of two sibling
+          subnets? Click it to merge them back into their parent. Joining is
+          the reverse of splitting &mdash; two /26 siblings merge back into the
+          /25 they came from. You can only join subnets that share the same
+          parent.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>The tree structure</h3>
+        <p>
+          Behind the table, the app maintains a <strong>binary tree</strong>.
+          Your original /24 is the root. Each split creates two children. Each
+          join removes two children and restores the parent. This tree structure
+          guarantees that every split is mathematically valid &mdash; no
+          overlapping subnets, no gaps, no wasted addresses.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ FEATURES ══════ -->
+    <section class="tab-panel" id="panel-features" role="tabpanel">
+      <h2>What you can do</h2>
+
+      <div class="concept-card">
+        <h3>Name your subnets</h3>
+        <p>
+          Click the Name field on any row and type a label &mdash;
+          "Servers", "Guest Wi-Fi", "Management". Names appear in the table
+          and are included when you save or export. Child subnets can inherit
+          names from their parent for hierarchical labeling.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Multiple trees</h3>
+        <p>
+          Add more CIDR blocks by typing them into the input. Each becomes its
+          own section in the table. You can have <code>10.0.0.0/8</code> and
+          <code>172.16.0.0/12</code> side by side, each with independent
+          split/join trees.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Save, Load, and Export</h3>
+        <p>
+          <strong>Save</strong> downloads your entire configuration as a JSON
+          file. <strong>Load</strong> restores it later. <strong>Export</strong>
+          produces a CSV file you can open in a spreadsheet. Everything is
+          stored locally &mdash; nothing is sent to a server.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Undo and Redo</h3>
+        <p>
+          Made a mistake? Press <strong>Ctrl+Z</strong> (or Cmd+Z on Mac) to
+          undo. <strong>Ctrl+Shift+Z</strong> to redo. The app keeps 50 levels
+          of undo history in memory.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Color themes</h3>
+        <p>
+          Below the table you will find color controls. Choose from 17 themes
+          (Pastel, Neon, Forest, Ocean, and more) and 7 coloring modes
+          (by depth, by block size, cycle, alternating, and others). Switch between
+          dark and light mode with the toggle in the header.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Column visibility</h3>
+        <p>
+          Hover over the column header row to reveal controls for hiding,
+          showing, and reordering columns. Drag columns to rearrange them.
+          Hidden columns can be restored from the "Hidden Columns" box that
+          appears in the header area.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>VLAN column</h3>
+        <p>
+          The VLAN column supports a macro language for automatic VLAN
+          assignment. Write expressions like <code>100 + $3</code> (where
+          <code>$3</code> is the third octet) and the tool evaluates them
+          for each row. Presets are available for common VLAN schemes.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ TIPS ══════ -->
+    <section class="tab-panel" id="panel-tips" role="tabpanel">
+      <h2>Tips and reference</h2>
+      <h3>Common subnet sizes for different use cases</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Use Case</th><th>Suggested Prefix</th><th class="num">Addresses</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Home or small office</td><td><code>/24</code></td><td class="num">256</td></tr>
+          <tr><td>Server VLAN (small)</td><td><code>/27</code></td><td class="num">32</td></tr>
+          <tr><td>Point-to-point link</td><td><code>/30</code> or <code>/31</code></td><td class="num">4 or 2</td></tr>
+          <tr><td>Management network</td><td><code>/28</code></td><td class="num">16</td></tr>
+          <tr><td>Guest Wi-Fi</td><td><code>/23</code></td><td class="num">512</td></tr>
+          <tr><td>Cloud VPC</td><td><code>/16</code> to <code>/20</code></td><td class="num">4,096 to 65,536</td></tr>
+          <tr><td>Data center supernet</td><td><code>/12</code> to <code>/8</code></td><td class="num">1M to 16M</td></tr>
+        </tbody>
+      </table>
+      <h3>IPv6 support</h3>
+      <p>
+        slashwhat works with IPv6 CIDR blocks. Type an IPv6 prefix like
+        <code>2001:db8::/48</code> and split just like you would with IPv4.
+        The table adapts to show full IPv6 addresses, prefix lengths, and
+        the much larger address counts.
+      </p>
+
+      <h3>Keyboard shortcuts</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Shortcut</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>Ctrl+Z</code> / <code>Cmd+Z</code></td><td>Undo</td></tr>
+          <tr><td><code>Ctrl+Shift+Z</code> / <code>Cmd+Shift+Z</code></td><td>Redo</td></tr>
+          <tr><td><code>Enter</code></td><td>Submit CIDR input</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Learn more</h3>
+      <p>
+        Read the <a href="about.html">About page</a> for the full story of how
+        slashwhat was built &mdash; the architecture, the AI coding process, and
+        war stories from development.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="about-footer">
+    <p>
+      &copy; 2026 slashwhat. Licensed under
+      <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>.
+      Free for non-commercial use. License must be preserved.
+    </p>
+  </footer>
+
+</div>
+
+<script src="js/getting-started.js"></script>
+
+</body>
+</html>

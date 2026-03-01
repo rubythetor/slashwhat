@@ -1,0 +1,240 @@
+/*\! © 2026 slashwhat. MIT License. */
+/* table-cells.css — Per-column cell styles: naming, description, notes */
+
+/* ── Subnet naming ────────────────────────────────────── */
+
+.name-cell {
+  white-space: nowrap;
+}
+
+.name-segment {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.name-segment:hover {
+  background: var(--surface-hover);
+}
+
+.name-separator {
+  cursor: pointer;
+  padding: 0 1px;
+  border-bottom: 1px dashed transparent;
+}
+
+.name-separator:hover {
+  border-bottom-color: var(--border);
+  background: var(--surface-hover);
+  border-radius: 2px;
+}
+
+.name-sep-edit {
+  width: 2em;
+  text-align: center;
+}
+
+.name-placeholder {
+  color: var(--text-muted);
+}
+
+.name-edit {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  border: 1px solid var(--accent);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 1px 4px;
+  border-radius: 3px;
+  outline: none;
+  width: 6em;
+}
+
+/* ── Section ID (numeric, inline before section name) ── */
+
+.header-sid-text {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.header-sid-text:hover {
+  background: var(--surface-hover);
+}
+
+.header-sid-placeholder {
+  color: var(--text-muted);
+  font-size: 0.85em;
+}
+
+.sid-edit {
+  width: 4ch;
+}
+
+/* ── Description column ─────────────────────────────── */
+
+.desc-cell {
+  white-space: nowrap;
+}
+
+.desc-text {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.desc-text:hover {
+  background: var(--surface-hover);
+}
+
+.desc-placeholder {
+  color: var(--text-muted);
+}
+
+.desc-edit {
+  width: 12em;
+}
+
+/* ── Notes column ───────────────────────────────────── */
+
+.splitter-table td.notes-cell,
+.splitter-table .tree-header-cell.notes-cell {
+  max-width: 200px;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+/* Notes cells keep their own font size, independent from --row-font-size */
+.splitter-table td.notes-cell { font-size: 0.875rem; }
+.splitter-table .notes-cell.notes-size-small { font-size: 0.7rem; }
+.splitter-table .notes-cell.notes-size-smallest { font-size: 0.55rem; }
+
+.notes-preview,
+.header-notes-text {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border);
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+.notes-preview:hover,
+.header-notes-text:hover {
+  background: var(--surface-hover);
+}
+
+/* Line clamp modes — applied to the preview span */
+.notes-1line {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.notes-2line {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.notes-3line {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.notes-placeholder {
+  color: var(--text-muted);
+}
+
+.notes-popup {
+  z-index: 200;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  padding: 8px;
+}
+
+.notes-textarea {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--accent);
+  border-radius: 3px;
+  outline: none;
+  padding: 4px 6px;
+  min-height: 80px;
+  min-width: 200px;
+  resize: both;
+  display: block;
+}
+
+.notes-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.notes-save-btn,
+.notes-cancel-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px;
+  line-height: 1;
+}
+
+.notes-save-btn {
+  color: var(--success);
+}
+
+.notes-save-btn:hover {
+  color: var(--input-valid);
+}
+
+.notes-cancel-btn {
+  color: var(--error);
+}
+
+.notes-cancel-btn:hover {
+  color: var(--error-hover);
+}
+
+/* ── VLAN column ───────────────────────────────────── */
+
+.cell-vlan { text-align: left; font-variant-numeric: tabular-nums; }
+.vlan-warn { color: var(--warning, #d97706); }
+.vlan-err  { color: var(--error); opacity: 0.55; }
+.vlan-err-label { font-weight: 600; }
+.vlan-err-detail { font-size: 0.8em; opacity: 0.85; }
+.vlan-inherited { opacity: 0.5; }
+
+.header-vlan-text {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border);
+  padding: 1px 4px;
+  border-radius: 2px;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.72em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.45;
+}
+
+.header-vlan-text:hover {
+  background: var(--surface-hover);
+  opacity: 0.7;
+}
+
+.vlan-edit {
+  width: 10em;
+  font-family: var(--font-mono);
+}

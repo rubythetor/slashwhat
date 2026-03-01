@@ -1,0 +1,733 @@
+<!-- © 2026 slashwhat. MIT License. -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subnetting Strategy — slashwhat</title>
+  <meta name="description" content="Real-world subnetting strategy guide. Cookbook recipes for offices, campuses, and cloud. AWS, Azure, GCP subnet planning. Right-sizing, branch templates, and data center fabric design.">
+  <link rel="canonical" href="https://slashwhat.net/strategy.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://slashwhat.net/strategy.html">
+  <meta property="og:title" content="Subnetting Strategy — slashwhat">
+  <meta property="og:description" content="Real-world subnetting strategy guide covering cloud, enterprise, branch, and data center designs with concrete CIDR examples.">
+  <meta property="og:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="og:site_name" content="slashwhat">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Subnetting Strategy — slashwhat">
+  <meta name="twitter:description" content="Real-world subnetting strategy guide with concrete CIDR examples for cloud, enterprise, and data center.">
+  <meta name="twitter:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="article:published_time" content="2025-02-01">
+  <meta name="keywords" content="subnetting strategy, network design, AWS subnet planning, Azure networking, campus network, data center fabric, right-sizing subnets">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Subnetting Strategy — slashwhat",
+    "description": "Real-world subnetting strategy guide covering cloud, enterprise, branch, and data center designs with concrete CIDR examples.",
+    "url": "https://slashwhat.net/strategy.html",
+    "isPartOf": { "@type": "WebApplication", "name": "slashwhat", "url": "https://slashwhat.net/" }
+  }
+  </script>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <div class="app-header-left">
+      <a href="index.html" class="about-logo-link">
+        <img src="img/logo.png" alt="slashwhat" class="app-logo">
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="back-to-app">&larr; Return to app</a>
+    </div>
+  </header>
+
+  <main class="about-content">
+
+    <h1 class="about-title">Subnetting Strategy</h1>
+
+    <div class="tab-bar" role="tablist" aria-label="Strategy topics">
+      <button class="tab active" role="tab" data-tab="cookbook" aria-selected="true">Cookbook</button>
+      <button class="tab" role="tab" data-tab="cloud" aria-selected="false">Cloud</button>
+      <button class="tab" role="tab" data-tab="sizing" aria-selected="false">Sizing</button>
+      <button class="tab" role="tab" data-tab="branch" aria-selected="false">Branch</button>
+      <button class="tab" role="tab" data-tab="datacenter" aria-selected="false">Data Center</button>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         TAB 1: COOKBOOK
+         ════════════════════════════════════════════════════════ -->
+    <div id="panel-cookbook" class="tab-panel active">
+
+      <h2>Cookbook</h2>
+      <p>
+        Recipes for specific real-world subnetting challenges. Each recipe gives
+        you a concrete CIDR plan you can adapt to your environment.
+      </p>
+
+      <h3>Small office (50 users)</h3>
+      <p>
+        Start with a <code>/22</code> parent block &mdash; 1,024 addresses, split
+        into 6 VLANs. This leaves room for growth without wasting a huge swath of
+        address space.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>VLAN</th><th>Purpose</th><th>Subnet</th><th class="num">Usable</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>10</td><td>Employee data</td><td><code>10.1.0.0/24</code></td><td class="num">254</td></tr>
+          <tr><td>20</td><td>VoIP / voice</td><td><code>10.1.1.0/25</code></td><td class="num">126</td></tr>
+          <tr><td>30</td><td>Printers / shared</td><td><code>10.1.1.128/27</code></td><td class="num">30</td></tr>
+          <tr><td>40</td><td>Guest / BYOD</td><td><code>10.1.2.0/24</code></td><td class="num">254</td></tr>
+          <tr><td>50</td><td>Management</td><td><code>10.1.1.160/28</code></td><td class="num">14</td></tr>
+          <tr><td>99</td><td>Servers / infra</td><td><code>10.1.3.0/25</code></td><td class="num">126</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Guest gets a full <code>/24</code> because visitors bring 2&ndash;4
+        devices each (phone, laptop, tablet). Fifty guests can easily consume
+        150+ IPs.
+      </p>
+
+      <h3>Campus</h3>
+      <p>
+        Assign a <code>/20</code> per building. Never span VLANs across
+        buildings &mdash; this contains STP failure domains to a single building.
+        Use Layer 3 at the distribution layer so each building's subnets
+        summarize to one route announcement.
+      </p>
+      <p>
+        Summarization-friendly layout: Building A = <code>10.10.0.0/20</code>,
+        Building B = <code>10.10.16.0/20</code>, Building C =
+        <code>10.10.32.0/20</code>. All three collapse to
+        <code>10.10.0.0/18</code> at the core.
+      </p>
+
+      <h3>VLAN + subnet alignment</h3>
+      <p>
+        The golden rule: <strong>1 VLAN = 1 subnet, always.</strong> If you share
+        a subnet across VLANs (or vice versa), troubleshooting becomes a
+        nightmare because ARP and broadcast domains don't align.
+      </p>
+      <p>
+        Numbering scheme that scales: 1xx for data, 2xx for voice, 3xx for
+        guest, 4xx for IoT, 9xx for management. A branch with VLAN 110 is
+        instantly recognizable as "data, branch 1."
+      </p>
+
+      <h3>Guest isolation</h3>
+      <p>
+        A separate VLAN is necessary but not sufficient. Also place guests in a
+        dedicated firewall zone with client isolation enabled on the access
+        points (so guests can't see each other). Add explicit deny rules to all
+        RFC 1918 ranges &mdash; guests reach the internet and nothing else. Size
+        the subnet at <code>/23</code> or <code>/22</code> to handle surges.
+      </p>
+
+      <h3>DMZ</h3>
+      <p>
+        A <code>/27</code> or <code>/28</code> between two firewall interfaces.
+        Strict rules: only specific ports allowed inbound, all outbound
+        initiated from the DMZ is denied except explicit allowlisted
+        destinations. Fewer addresses means a smaller attack surface.
+      </p>
+
+      <h3>Management network</h3>
+      <p>
+        A <code>/27</code> or <code>/28</code> restricted by ACLs to admin jump
+        hosts only. This network carries switch management, IPMI/iDRAC, AP
+        controllers, and UPS monitoring. Never route it to the general user
+        population.
+      </p>
+
+      <h3>IoT segmentation</h3>
+      <p>
+        Group IoT devices by function, not by floor: cameras in one VLAN, HVAC
+        in another, badge readers in a third. Firewall allowlists should permit
+        only traffic to specific controller or cloud endpoints. IoT devices are
+        notoriously under-patched &mdash; segmentation limits blast radius.
+      </p>
+
+      <h3>Flat-to-segmented migration</h3>
+      <p>
+        Migrating from a single flat network to VLANs is one of the most common
+        and most stressful projects in enterprise networking. Do it in phases:
+      </p>
+      <ul class="feature-list">
+        <li><strong>Inventory</strong> &mdash; document every device, its MAC, its current IP, and whether it uses DHCP or static</li>
+        <li><strong>Pilot one floor</strong> &mdash; create the new VLANs on one floor, run them in parallel with the flat network</li>
+        <li><strong>DHCP clients first</strong> &mdash; move DHCP devices by changing the relay/scope; they pick up the new subnet at next lease renewal</li>
+        <li><strong>Static devices last</strong> &mdash; printers, servers, and controllers need manual readdressing or DHCP reservations</li>
+        <li><strong>Rollback plan</strong> &mdash; keep the old flat VLAN active with a small DHCP scope so you can move devices back instantly</li>
+      </ul>
+
+      <h3>Strategic gap leaving (buddy allocation)</h3>
+      <p>
+        When you allocate <code>10.1.0.0/24</code>, keep
+        <code>10.1.1.0/24</code> free as its "buddy" so you can later merge
+        them into <code>10.1.0.0/23</code>. This is exactly how binary tree
+        splitting works &mdash; and it's what slashwhat visualizes.
+      </p>
+<pre><code>10.1.0.0/22
+├── 10.1.0.0/23        (allocate left half)
+│   ├── 10.1.0.0/24    (use this now)
+│   └── 10.1.1.0/24    (growth space — the buddy)
+└── 10.1.2.0/23        (keep right half entirely free)</code></pre>
+
+      <h3>Gateway placement for future expansion</h3>
+      <p>
+        Place the default gateway at <code>.1</code> (first usable address).
+        When you later expand <code>10.1.0.0/24</code> to
+        <code>10.1.0.0/23</code>, the gateway at <code>10.1.0.1</code> stays
+        valid &mdash; no client reconfiguration needed. The new space
+        (<code>10.1.1.0</code>&ndash;<code>10.1.1.255</code>) is purely
+        additive.
+      </p>
+      <p>
+        Anti-pattern: gateway at <code>.254</code> works fine for expansion but
+        ends up awkwardly mid-range after you widen the subnet.
+      </p>
+
+      <h3>IPv6</h3>
+      <div class="concept-card">
+        <h3>IPv6 for LANs</h3>
+        <p>
+          Always use <code>/64</code> for LANs &mdash; SLAAC requires it, and
+          it's the universal standard. A <code>/48</code> per site gives you
+          65,536 <code>/64</code> subnets. Dual-stack (IPv4 + IPv6 running
+          simultaneously) is the safest transition strategy. Use GUA (globally
+          routable addresses) as primary; avoid ULA unless you have a specific
+          reason.
+        </p>
+        <p>
+          Reference:
+          <a href="https://www.ripe.net/publications/docs/ripe-690/">https://www.ripe.net/publications/docs/ripe-690/</a>
+        </p>
+      </div>
+
+      <div class="opinion-callout">
+        <strong>Differing Opinion to Consider</strong>
+        <p>
+          ULA vs GUA for IPv6 internal networks. The GUA-only camp says it's
+          simpler and avoids address selection bugs (RFC 6724 historically
+          preferred IPv4 over ULA). The ULA camp says it provides
+          provider-independent stability. IETF draft-ietf-6man-rfc6724-update
+          is fixing the preference issue.
+        </p>
+        <p>
+          See: <a href="https://blog.ipspace.net/2022/05/ipv6-ula-made-useless/">https://blog.ipspace.net/2022/05/ipv6-ula-made-useless/</a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         TAB 2: CLOUD
+         ════════════════════════════════════════════════════════ -->
+    <div id="panel-cloud" class="tab-panel">
+
+      <h2>Cloud</h2>
+      <p>
+        AWS, Azure, and GCP subnetting &mdash; the constraints that matter,
+        the patterns that work, and the mistakes that cause outages.
+      </p>
+
+      <h3>The #1 cloud subnetting lesson</h3>
+      <p>
+        <strong>IP space is the long pole in the tent.</strong> Compute scales in
+        seconds (auto-scaling groups, spot fleets, EKS node pools). Storage
+        scales instantly (EBS, PD). But you cannot resize a subnet in place on
+        AWS or Azure. If your <code>/24</code> runs out of IPs during a traffic
+        spike, you face a painful migration &mdash; not a button click. IP
+        planning is the one thing that must be right <strong>before</strong> you need it.
+      </p>
+      <p>
+        Case study: the Neon outage (May 2025). Pods grew from ~5,000 to ~8,100,
+        exhausting IPs across three <code>/20</code> subnets. 5.5 hours of
+        downtime. The failure was subtle &mdash; AWS VPC CNI's warm ENI buffer
+        stranded IPs on nodes that had no CPU capacity. Even though the subnet
+        showed "available" IPs, prefix allocations within ENIs were exhausted.
+        <a href="https://neon.com/blog/aws-cni-lessons-from-a-production-outage">https://neon.com/blog/aws-cni-lessons-from-a-production-outage</a>
+      </p>
+
+      <h3>GCP is the exception</h3>
+      <p>
+        GCP supports expanding subnet ranges in place (increase only, never
+        shrink). AWS and Azure do not &mdash; you must create a new subnet and
+        migrate.
+        <a href="https://cloud.google.com/vpc/docs/using-vpc#expand-subnet">https://cloud.google.com/vpc/docs/using-vpc#expand-subnet</a>
+      </p>
+
+      <h3>Reserved addresses by provider</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Provider</th><th class="num">Reserved/subnet</th><th>Min subnet</th><th class="num">Usable in /28</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>AWS</td><td class="num">5</td><td><code>/28</code></td><td class="num">11</td></tr>
+          <tr><td>Azure</td><td class="num">5</td><td><code>/29</code></td><td class="num">11</td></tr>
+          <tr><td>GCP</td><td class="num">4</td><td><code>/29</code></td><td class="num">12</td></tr>
+        </tbody>
+      </table>
+      <p>
+        AWS reserves .0 (network), .1 (VPC router), .2 (DNS), .3 (future use),
+        and the last address (broadcast).
+        <a href="https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html">https://docs.aws.amazon.com/vpc/latest/userguide/subnet-sizing.html</a>
+        &middot;
+        <a href="https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-faq">https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-faq</a>
+        &middot;
+        <a href="https://cloud.google.com/vpc/docs/subnets">https://cloud.google.com/vpc/docs/subnets</a>
+      </p>
+
+      <h3>AWS 3-tier VPC pattern</h3>
+      <p>
+        <code>/16</code> VPC with <code>/24</code> subnets across 3 AZs. Always
+        start with <code>/16</code> &mdash; you can add secondary CIDRs later
+        but cannot shrink.
+        <a href="https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html">https://docs.aws.amazon.com/vpc/latest/userguide/configure-subnets.html</a>
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Tier</th><th>AZ-a</th><th>AZ-b</th><th>AZ-c</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Public</td><td><code>10.0.1.0/24</code></td><td><code>10.0.2.0/24</code></td><td><code>10.0.3.0/24</code></td></tr>
+          <tr><td>Private (app)</td><td><code>10.0.11.0/24</code></td><td><code>10.0.12.0/24</code></td><td><code>10.0.13.0/24</code></td></tr>
+          <tr><td>Private (data)</td><td><code>10.0.21.0/24</code></td><td><code>10.0.22.0/24</code></td><td><code>10.0.23.0/24</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>AWS EKS pod networking (2026)</h3>
+      <p>
+        Prefix delegation is now the standard approach. VPC CNI assigns
+        <code>/28</code> blocks (16 IPs) to ENI slots instead of individual IPs,
+        enabling 110 pods/node. Use <code>/20</code> or larger subnets for pods.
+        Karpenter sets <code>--max-pods=110</code> by default, ignoring the
+        legacy ENI calculator.
+      </p>
+      <p>
+        For pod CIDRs that won't conflict with corporate space, add a secondary
+        CIDR from <code>100.64.0.0/10</code> (CGNAT / RFC 6598).
+        <a href="https://docs.aws.amazon.com/eks/latest/best-practices/vpc-cni.html">https://docs.aws.amazon.com/eks/latest/best-practices/vpc-cni.html</a>
+        &middot;
+        <a href="https://www.eksworkshop.com/docs/networking/vpc-cni/prefix/">https://www.eksworkshop.com/docs/networking/vpc-cni/prefix/</a>
+      </p>
+
+      <div class="opinion-callout">
+        <strong>Differing Opinion to Consider</strong>
+        <p>
+          Using <code>100.64.0.0/10</code> (CGNAT) for pod CIDRs. AWS docs
+          recommend it to avoid RFC 1918 collisions. But CGNAT space is used by
+          ISPs between their equipment and customers &mdash; remote workers on
+          cellular or home connections may have CGNAT addresses, causing VPN
+          routing conflicts. The long-term answer is IPv6 dual-stack, not more
+          creative IPv4 carve-outs.
+        </p>
+      </div>
+
+      <h3>Azure hub-and-spoke</h3>
+      <p>
+        Hub VNet <code>/16</code> for shared services + firewall. Spoke VNets
+        per environment. Azure CNI Overlay is the 2026 recommendation for AKS:
+        pods get addresses from an overlay CIDR (default
+        <code>10.244.0.0/16</code>) that can be reused across independent
+        clusters in the same VNet.
+        <a href="https://learn.microsoft.com/en-us/azure/aks/azure-cni-overlay">https://learn.microsoft.com/en-us/azure/aks/azure-cni-overlay</a>
+        &middot;
+        <a href="https://learn.microsoft.com/en-us/azure/virtual-network/concepts-and-best-practices">https://learn.microsoft.com/en-us/azure/virtual-network/concepts-and-best-practices</a>
+      </p>
+
+      <h3>GCP global VPC</h3>
+      <p>
+        Custom mode, regional subnets. GKE now supports Class E addresses
+        (<code>240.0.0.0/4</code>) for pods &mdash; 268M addresses, dwarfing
+        all of RFC 1918 combined. Production-ready but with caveats: Class E
+        traffic gets blocked on Windows hosts and some on-prem hardware.
+        <a href="https://cloud.google.com/blog/products/containers-kubernetes/how-class-e-addresses-solve-for-ip-address-exhaustion-in-gke">https://cloud.google.com/blog/products/containers-kubernetes/how-class-e-addresses-solve-for-ip-address-exhaustion-in-gke</a>
+      </p>
+
+      <h3>Multi-region IP planning</h3>
+      <p>
+        Assign each region a <code>/12</code> from a <code>10.0.0.0/8</code>
+        enterprise allocation:
+      </p>
+<pre><code>10.0.0.0/8 (enterprise)
+  10.0.0.0/12  = us-east-1
+  10.16.0.0/12 = us-west-2
+  10.32.0.0/12 = eu-west-1
+  10.48.0.0/12 = ap-southeast-1
+  10.64.0.0/12 = future growth</code></pre>
+      <p>
+        <a href="https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_network_topology_non_overlap_ip.html">https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/rel_planning_network_topology_non_overlap_ip.html</a>
+      </p>
+
+      <div class="opinion-callout">
+        <strong>Differing Opinion to Consider</strong>
+        <p>
+          Large subnets (<code>/20</code>) vs many small subnets
+          (<code>/24</code>) in cloud. Large subnets are simpler and safer
+          against IP exhaustion during autoscaling. Small subnets provide
+          traditional L2 isolation. 2026 consensus leans toward large subnets +
+          identity-based microsegmentation (Cilium, cloud security groups)
+          instead of subnet-boundary security.
+          <a href="https://www.tigera.io/learn/guides/microsegmentation/">https://www.tigera.io/learn/guides/microsegmentation/</a>
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         TAB 3: SIZING
+         ════════════════════════════════════════════════════════ -->
+    <div id="panel-sizing" class="tab-panel">
+
+      <h2>Sizing</h2>
+      <p>
+        Right-sizing subnets &mdash; the math, the mistakes, and the tradeoffs.
+        Getting this wrong costs either wasted address space or a painful
+        renumbering project.
+      </p>
+
+      <h3>Kubernetes CIDR sizing</h3>
+      <p>
+        The formula: <code>pod CIDR = (max nodes) &times; (IPs/node)</code>.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>Platform</th><th class="num">Default pods/node</th><th>CIDR/node</th><th>100-node cluster needs</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>EKS</td><td class="num">110 (prefix delegation)</td><td><code>/24</code></td><td><code>/16</code> pod CIDR</td></tr>
+          <tr><td>AKS (CNI Overlay)</td><td class="num">250</td><td><code>/24</code></td><td><code>/16</code> pod CIDR</td></tr>
+          <tr><td>GKE</td><td class="num">110</td><td><code>/24</code></td><td><code>/16</code> pod CIDR</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Rolling updates temporarily double IP usage (old + new pods coexist).
+        Always size for 2x peak pod count.
+        <a href="https://docs.aws.amazon.com/eks/latest/best-practices/subnets.html">https://docs.aws.amazon.com/eks/latest/best-practices/subnets.html</a>
+        &middot;
+        <a href="https://learn.microsoft.com/en-us/azure/aks/concepts-network-ip-address-planning">https://learn.microsoft.com/en-us/azure/aks/concepts-network-ip-address-planning</a>
+        &middot;
+        <a href="https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr">https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr</a>
+      </p>
+
+      <h3>Cilium and eBPF</h3>
+      <p>
+        Cilium is now the dominant advanced CNI (used by Adobe, Capital One;
+        Azure AKS moving toward it). It uses identity-based policies (Kubernetes
+        labels) instead of IP-based rules &mdash; a paradigm shift. But pods
+        still need IPs for the data plane, so CIDR planning remains necessary.
+        <a href="https://github.com/cilium/cilium">https://github.com/cilium/cilium</a>
+      </p>
+
+      <h3>Service mesh impact</h3>
+      <p>
+        Istio/Linkerd sidecars share the pod's network namespace, so they don't
+        consume extra IPs. The main impact is on pod density: sidecar memory/CPU
+        overhead reduces how many pods fit per node, which indirectly affects how
+        many node IPs you need.
+      </p>
+
+      <h3>Multi-cluster</h3>
+      <p>
+        All clusters in a mesh must have non-overlapping pod CIDRs. Cilium
+        ClusterMesh requires a native routing CIDR covering all clusters
+        (typically <code>10.0.0.0/8</code>). Plan pod CIDRs per cluster from
+        day one.
+        <a href="https://docs.cilium.io/en/stable/network/clustermesh/clustermesh/">https://docs.cilium.io/en/stable/network/clustermesh/clustermesh/</a>
+      </p>
+
+      <h3>The 2x rule</h3>
+      <p>
+        Size for 2x your current device count. This accounts for 3&ndash;5 years
+        of organic growth without renumbering. It's the single most reliable
+        heuristic in subnet planning.
+      </p>
+
+      <h3>Over-provisioning vs under-provisioning</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th></th><th>Over-provisioning</th><th>Under-provisioning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Cost</strong></td><td>Wastes address space</td><td>Forces painful renumbering</td></tr>
+          <tr><td><strong>Routing</strong></td><td>Larger broadcast domains</td><td>Larger routing tables</td></tr>
+          <tr><td><strong>Cloud</strong></td><td>Fewer subnets fit in VPC</td><td>Services fail to launch</td></tr>
+          <tr class="row-total"><td colspan="3">Verdict: slightly over-provision. Renumbering costs more than wasted IPs.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Sizing by workload type</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Workload</th><th>Size</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>User LAN</td><td><code>/24</code></td><td>254 IPs covers most floors</td></tr>
+          <tr><td>Voice</td><td><code>/24</code> or <code>/25</code></td><td>Matches user count 1:1</td></tr>
+          <tr><td>Guest / BYOD</td><td><code>/23</code> or <code>/22</code></td><td>Multiple devices per person</td></tr>
+          <tr><td>Server</td><td><code>/25</code> or <code>/26</code></td><td>Countable and stable</td></tr>
+          <tr><td>Management</td><td><code>/27</code> or <code>/28</code></td><td>Few devices, well-known</td></tr>
+          <tr><td>IoT cameras</td><td><code>/24</code></td><td>Grows quickly</td></tr>
+          <tr><td>WAN links</td><td><code>/31</code></td><td>Only 2 endpoints (RFC 3021)</td></tr>
+          <tr><td>Cloud app subnet</td><td><code>/24</code></td><td>Room for scaling</td></tr>
+          <tr><td>K8s pod subnet</td><td><code>/16</code> to <code>/12</code></td><td>Depends on cluster size</td></tr>
+          <tr><td>K8s node subnet</td><td><code>/20</code> or larger</td><td>Prefix delegation consumes in /28 blocks</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The power-of-two trap</h3>
+      <p>
+        For newcomers: 100 devices needs a <code>/25</code> (126 usable) or a
+        <code>/24</code> (254 usable). You can't get exactly 100. A
+        <code>/25</code> is cutting it close &mdash; go <code>/24</code> for
+        the 2x growth rule.
+      </p>
+
+      <h3>Efficiency vs sprawl</h3>
+      <p>
+        In a <code>/8</code> you have 16M addresses. Wasting a few
+        <code>/24</code>s is negligible. But in cloud where each VPC is a
+        <code>/16</code>, every <code>/24</code> you allocate is 1/256th of
+        your VPC. Sprawl becomes real when you have 50 microservices each
+        demanding their own subnet. The fix: use fewer, larger subnets and
+        enforce isolation at the security group / network policy layer.
+      </p>
+
+      <div class="opinion-callout">
+        <strong>Differing Opinion to Consider</strong>
+        <p>
+          Flat vs micro-segmented. Traditional networking says more subnets =
+          more security boundaries. Modern cloud-native says fewer subnets +
+          identity-based microsegmentation (Cilium, Calico network policies) is
+          both simpler and more secure because it captures east-west traffic
+          that subnet boundaries miss. Both camps agree: never use a flat
+          <code>/16</code> with no segmentation at all.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         TAB 4: BRANCH
+         ════════════════════════════════════════════════════════ -->
+    <div id="panel-branch" class="tab-panel">
+
+      <h2>Branch</h2>
+      <p>
+        Branch office IP planning &mdash; standardized templates, WAN links,
+        and summarization-friendly allocation.
+      </p>
+
+      <h3>Standardized branch template</h3>
+      <p>
+        A <code>/22</code> per branch gives 1,024 addresses. Use the same VLAN
+        layout at every branch &mdash; consistency makes troubleshooting and
+        automation possible.
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr><th>VLAN</th><th>Purpose</th><th>Subnet</th><th class="num">Usable</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>110</td><td>Employee data</td><td><code>10.20.0.0/24</code></td><td class="num">254</td></tr>
+          <tr><td>210</td><td>Voice</td><td><code>10.20.1.0/25</code></td><td class="num">126</td></tr>
+          <tr><td>310</td><td>Guest</td><td><code>10.20.1.128/25</code></td><td class="num">126</td></tr>
+          <tr><td>410</td><td>IoT / cameras</td><td><code>10.20.2.0/26</code></td><td class="num">62</td></tr>
+          <tr><td>910</td><td>Management</td><td><code>10.20.2.64/27</code></td><td class="num">30</td></tr>
+          <tr><td>510</td><td>Servers</td><td><code>10.20.2.96/27</code></td><td class="num">30</td></tr>
+          <tr><td>&mdash;</td><td>WAN link</td><td><code>10.20.3.252/31</code></td><td class="num">2</td></tr>
+          <tr><td>&mdash;</td><td>Growth reserve</td><td><code>10.20.2.128/25</code></td><td class="num">126</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Branch 2 = <code>10.20.4.0/22</code>, Branch 3 =
+        <code>10.20.8.0/22</code>. Each branch summarizes to one route. Note
+        the intentional gap: increment by 4 in the third octet to stay on
+        <code>/22</code> boundaries. The growth reserve <code>/25</code> within
+        each branch provides room for expansion.
+      </p>
+
+      <h3>Hub-and-spoke WAN</h3>
+      <p>
+        Use <code>/31</code> per point-to-point link (RFC 3021). Reserve
+        <code>10.255.0.0/24</code> for all WAN links &mdash; that's 128 links.
+        <a href="https://datatracker.ietf.org/doc/html/rfc3021">https://datatracker.ietf.org/doc/html/rfc3021</a>
+      </p>
+
+      <div class="opinion-callout">
+        <strong>Differing Opinion to Consider</strong>
+        <p>
+          <code>/30</code> vs <code>/31</code> for point-to-point links.
+          <code>/31</code> saves 2 IPs per link and is supported by all modern
+          equipment. <code>/30</code> is only needed for legacy gear that
+          doesn't support RFC 3021 (published in 2000). If you have modern gear,
+          use <code>/31</code>. If you have Check Point firewalls or very old
+          IOS versions, test first.
+        </p>
+      </div>
+
+      <h3>SD-WAN</h3>
+      <p>
+        The overlay simplifies routing policy but underlay IPs still matter.
+        Each hub needs at least a <code>/24</code>; spokes use the standard
+        branch template above.
+      </p>
+
+      <h3>Summarization-friendly allocation</h3>
+      <p>
+        This is a critical concept. Bad: Branch 1 = <code>10.20.1.0/24</code>,
+        Branch 2 = <code>10.20.5.0/24</code> (can't summarize). Good: Branch 1
+        = <code>10.20.0.0/22</code>, Branch 2 = <code>10.20.4.0/22</code> (all
+        8 branches summarize to <code>10.20.0.0/19</code>). Always allocate on
+        power-of-two boundaries.
+      </p>
+
+      <h3>DHCP scope planning</h3>
+      <p>
+        Reserve the first 10&ndash;20 IPs for static assignments (gateway,
+        printers, servers). Recommended lease times: 8 hours for user devices,
+        4 hours for guests, infinite for VoIP phones. Use DHCP Option 150 for
+        phone provisioning server addresses.
+      </p>
+
+      <h3>RFC 1918 tradeoffs</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>Range</th><th>Size</th><th>Best for</th><th>Gotchas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>10.0.0.0/8</code></td><td>16M</td><td>Large orgs, cloud</td><td>Overlaps with everyone</td></tr>
+          <tr><td><code>172.16.0.0/12</code></td><td>1M</td><td>Secondary, DMZ</td><td>Only 172.16&ndash;31 is private; 172.0&ndash;15 is public</td></tr>
+          <tr><td><code>192.168.0.0/16</code></td><td>65K</td><td>Labs, OOB mgmt</td><td>Too small; conflicts with every home router</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Recommendation: use <code>10/8</code> as primary. Reserve
+        <code>172.16/12</code> for DMZ or environments that must not overlap
+        with <code>10.x</code>. Use <code>192.168/16</code> only for OOB
+        management.
+        <a href="https://datatracker.ietf.org/doc/html/rfc1918">https://datatracker.ietf.org/doc/html/rfc1918</a>
+      </p>
+
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         TAB 5: DATA CENTER
+         ════════════════════════════════════════════════════════ -->
+    <div id="panel-datacenter" class="tab-panel">
+
+      <h2>Data Center</h2>
+      <p>
+        Data center fabric subnetting &mdash; spine-leaf underlay, VXLAN
+        overlay, out-of-band management, and multi-tenant design.
+      </p>
+
+      <h3>Spine-leaf underlay</h3>
+      <p>
+        <code>/32</code> loopbacks for each device, <code>/31</code>
+        point-to-point links between spines and leaves. Convention: 3rd octet =
+        tier (0 = spine, 1 = leaf), 4th octet = device number.
+      </p>
+<pre><code>Loopbacks (10.0.0.0/24):
+  Spines: 10.0.0.1/32, 10.0.0.2/32, 10.0.0.3/32, 10.0.0.4/32
+  Leaves:  10.0.1.1/32, 10.0.1.2/32, ... 10.0.1.48/32
+
+P2P links (10.0.2.0/24):
+  Spine1-Leaf1: 10.0.2.0/31
+  Spine1-Leaf2: 10.0.2.2/31
+  Spine2-Leaf1: 10.0.2.4/31</code></pre>
+      <p>
+        eBGP underlay, one ASN per device or per tier. ECMP across all spines.
+        <a href="https://www.juniper.net/documentation/us/en/software/nce/sg-005-data-center-fabric/">https://www.juniper.net/documentation/us/en/software/nce/sg-005-data-center-fabric/</a>
+      </p>
+
+      <h3>OOB management</h3>
+      <p>
+        A physically separate network (dedicated switches, separate cabling).
+        Use <code>192.168.x.x</code> to clearly distinguish from production
+        <code>10.x.x.x</code>. Access via a dedicated jump host only.
+        <a href="https://www.cisco.com/c/en/us/solutions/collateral/service-provider/out-of-band-best-practices-wp.html">https://www.cisco.com/c/en/us/solutions/collateral/service-provider/out-of-band-best-practices-wp.html</a>
+      </p>
+
+      <h3>East-west vs north-south</h3>
+      <p>
+        VXLAN overlay for east-west traffic (server-to-server within the DC).
+        Border leaf for north-south traffic (DC to the outside world). Every
+        east-west path in a spine-leaf fabric is exactly 2 hops
+        (leaf&rarr;spine&rarr;leaf).
+      </p>
+
+      <h3>Multi-tenant (VXLAN-EVPN)</h3>
+      <p>
+        VRF per tenant, VNI per segment. Overlapping IPs are allowed across
+        tenants because VRFs provide full routing isolation.
+        <a href="https://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-739942.html">https://www.cisco.com/c/en/us/products/collateral/switches/nexus-9000-series-switches/white-paper-c11-739942.html</a>
+      </p>
+
+      <h3>Migration and renumbering</h3>
+      <p>
+        When renumbering is unavoidable, four strategies minimize disruption:
+      </p>
+      <ul class="feature-list">
+        <li><strong>Parallel prefix</strong> &mdash; add the new range alongside the old on every interface; migrate traffic gradually</li>
+        <li><strong>DHCP-first</strong> &mdash; handles 80&ndash;90% of devices automatically at next lease renewal</li>
+        <li><strong>DNS-based</strong> &mdash; services accessed by hostname migrate transparently as DNS records are updated</li>
+        <li><strong>Phased cutover</strong> &mdash; one rack at a time, maintaining rollback capability throughout</li>
+      </ul>
+
+      <h3>IPv6 in the data center</h3>
+      <p>
+        A <code>/48</code> per site gives 65,536 <code>/64</code> subnets. Use
+        <code>/127</code> for point-to-point links (RFC 6164) instead of
+        <code>/64</code> to prevent ping-pong attacks. Align to nibble
+        boundaries (prefix lengths divisible by 4) for clean DNS reverse zones.
+        <a href="https://www.ripe.net/publications/docs/ripe-690/">https://www.ripe.net/publications/docs/ripe-690/</a>
+      </p>
+
+      <h3>IPAM tools</h3>
+      <p>
+        You need something better than a spreadsheet. Options:
+      </p>
+      <ul class="feature-list">
+        <li><strong>NetBox</strong> &mdash; gold standard, open source, full IPAM + DCIM</li>
+        <li><strong>phpIPAM</strong> &mdash; lightweight, open source, web-based</li>
+        <li><strong>AWS VPC IPAM</strong> &mdash; native to AWS, tracks VPC allocations</li>
+        <li><strong>Infoblox / BlueCat</strong> &mdash; enterprise-grade, DDI (DNS/DHCP/IPAM)</li>
+      </ul>
+      <p>
+        Documentation minimum per subnet: CIDR, VLAN, purpose, site, gateway,
+        DHCP range, date allocated. Audit quarterly.
+      </p>
+
+    </div>
+
+  </main>
+
+  <footer class="about-footer">
+    <p>
+      &copy; 2026 slashwhat. Licensed under
+      <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>.
+      Free for non-commercial use. License must be preserved.
+    </p>
+  </footer>
+
+</div>
+
+<script src="js/strategy.js"></script>
+
+</body>
+</html>

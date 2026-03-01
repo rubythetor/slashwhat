@@ -1,0 +1,75 @@
+/*\! © 2026 slashwhat. MIT License. */
+/* responsive.css — Responsive breakpoints and reduced motion */
+
+/* ── Tablet / small desktop ────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .main-content {
+    padding: var(--space-lg);
+  }
+}
+
+/* ── Mobile ────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    padding: var(--space-md);
+    max-width: 100%;
+  }
+
+  /* Allow horizontal scrolling so the table doesn't clip or overflow
+     the viewport on narrow screens. */
+  #splitter-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .splitter-table {
+    font-size: 0.8rem;
+    min-width: 600px;
+  }
+
+  .splitter-table th,
+  .splitter-table td {
+    padding: var(--cell-pad-v, 6px) var(--cell-pad-h, 8px);
+  }
+
+  /* Sticky first column so users always see the subnet while scrolling (F-05). */
+  .splitter-table th:first-child,
+  .splitter-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+  }
+  /* Column headers sit above sticky data cells during vertical scroll. */
+  .splitter-table th:first-child {
+    z-index: 2;
+    background: var(--bg-secondary);
+  }
+  /* Section header rows need an opaque background so content doesn't bleed. */
+  .splitter-table .tree-header-cell:first-child {
+    background: #374151;
+  }
+}
+
+/* ── Small mobile ──────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: var(--space-sm);
+  }
+}
+
+/* ── Reduced motion ────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
