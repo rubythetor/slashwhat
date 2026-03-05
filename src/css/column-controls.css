@@ -1,0 +1,217 @@
+/*\! © 2026 slashwhat. MIT License. */
+/* column-controls.css — Hover-revealed column controls: reorder arrows,
+   hide button, settings label, hidden-columns row. All controls are
+   invisible by default and appear when <thead> is hovered. */
+
+/* ── Header cells need relative positioning for child layout ── */
+
+/* Reserve space above label for the absolutely-positioned hide
+   button so it doesn't cause layout shift on hover. */
+.splitter-table thead th[data-col] {
+  position: relative;
+  padding-top: 0.8em;
+  white-space: nowrap;
+}
+
+/* ── Hidden columns row ──────────────────────────────── */
+/* Pulled up toward the page header via negative margin on the
+   table. Content is invisible until thead hover. */
+
+.splitter-table {
+  margin-top: calc(-1 * var(--space-md));
+}
+
+.col-hidden-row td {
+  padding: 2px var(--space-md);
+  border-bottom: none;
+}
+
+/* Spread hidden items evenly across the row width so each
+   down-arrow points toward where the column will be inserted. */
+.col-hidden-items {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+
+/* Items inside fade in/out on hover — space is always reserved. */
+.col-hidden-row .col-hidden-item {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.splitter-table thead:hover .col-hidden-row .col-hidden-item {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* Match the column header text style so hidden items look like
+   the visible column labels — same font, size, weight, color. */
+.col-hidden-item {
+  padding: 0 16px;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.col-hidden-item:hover {
+  color: var(--text-primary);
+}
+
+/* Reset button stands out in red; icon is scaled up without affecting text size */
+.col-reset-btn {
+  color: var(--error) !important;
+}
+
+.col-reset-btn:hover {
+  color: var(--error-hover) !important;
+}
+
+.col-reset-icon {
+  font-size: 1rem;
+  line-height: 0.82;
+  display: inline-block;
+}
+
+/* ── Header group wraps arrows + label so hide button centers
+   over the label text rather than the full column width. ── */
+
+.col-header-group {
+  position: relative;
+  display: inline-block;
+}
+
+/* Hide button floats above the label group, centered horizontally.
+   Invisible by default, revealed on thead hover via opacity. */
+.col-hide-btn {
+  position: absolute;
+  bottom: calc(100% - 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.825rem;
+  padding: 0;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.splitter-table thead:hover .col-hide-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.col-hide-btn:hover {
+  color: var(--text-primary);
+}
+
+.col-hide-btn:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Reorder arrows (left/right of column label) ─────── */
+
+.col-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.825rem;
+  padding: 0;
+  line-height: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+}
+
+.col-arrow-left  { right: 100%; margin-right: 2px; }
+.col-arrow-right { left: 100%;  margin-left: 2px; }
+
+.splitter-table thead:hover .col-arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.col-arrow:hover {
+  color: var(--text-primary);
+}
+
+.col-arrow:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+
+/* ── Settings label (only on configurable columns) ───── */
+
+.col-settings-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin-left: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  vertical-align: middle;
+}
+
+.splitter-table thead:hover .col-settings-label {
+  opacity: 0.7;
+  pointer-events: auto;
+}
+
+.col-settings-label:hover {
+  opacity: 1;
+  color: var(--text-primary);
+}
+
+/* ── Column label text ───────────────────────────────── */
+
+.col-label-text {
+  vertical-align: middle;
+}
+
+.splitter-table thead th[data-col]:hover .col-label-text {
+  color: var(--text-primary);
+}
+
+/* ── Menu help text (reference in popups) ──────────── */
+
+.menu-help-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+/* ── Simple mode: hide column customization controls ─── */
+
+[data-simple-mode="true"] .col-hidden-row,
+[data-simple-mode="true"] .col-hide-btn,
+[data-simple-mode="true"] .col-arrow,
+[data-simple-mode="true"] .col-settings-label,
+[data-simple-mode="true"] .col-reset-btn { display: none; }
+
+/* VLAN menu needs more width for the reference block. */
+.vlan-menu-wide { min-width: 340px; }

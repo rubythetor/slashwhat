@@ -1,0 +1,255 @@
+/*\! © 2026 slashwhat. MIT License. */
+/* components.css — Buttons, inputs, toggles, toasts, theme toggle */
+
+/* ── Buttons ───────────────────────────────────────────── */
+
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+}
+
+.btn-secondary:hover {
+  color: var(--accent);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--error);
+  border: none;
+}
+
+.btn-danger:hover {
+  color: #ff6b6b;
+}
+
+/* Smaller variant for header buttons (Save/Load/Export/Reset) */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+}
+
+/* Save/Load button group in the header */
+.config-buttons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 0 var(--space-md);
+}
+
+/* ── Toggle ────────────────────────────────────────────── */
+
+.toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--surface-active);
+  cursor: pointer;
+  position: relative;
+  transition: background var(--transition-fast);
+  border: none;
+  flex-shrink: 0;
+}
+
+.toggle::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition-fast);
+}
+
+.toggle:checked {
+  background: var(--accent);
+}
+
+.toggle:checked::before {
+  transform: translateX(20px);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Toast notifications ──────────────────────────────── */
+
+.toast-container {
+  position: fixed;
+  bottom: var(--space-lg);
+  right: var(--space-lg);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.toast-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.toast-exit {
+  animation: toast-out 0.3s ease forwards;
+}
+
+@keyframes toast-out {
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.toast-message {
+  flex: 1;
+}
+
+.toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: currentColor;
+  opacity: 0.3;
+  animation: toast-progress linear forwards;
+  width: 100%;
+}
+
+@keyframes toast-progress {
+  from { width: 100%; }
+  to { width: 0; }
+}
+
+.toast-success { border-left: 3px solid var(--success); }
+.toast-success .toast-icon { color: var(--success); }
+
+.toast-error { border-left: 3px solid var(--error); }
+.toast-error .toast-icon { color: var(--error); }
+
+.toast-warning { border-left: 3px solid var(--warning); }
+.toast-warning .toast-icon { color: var(--warning); }
+
+.toast-info { border-left: 3px solid var(--info); }
+.toast-info .toast-icon { color: var(--info); }
+
+/* ── Header right group (reset + theme toggle) ───────── */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ── Theme toggle wrapper ─────────────────────────────── */
+
+.theme-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px var(--space-md);
+}
+
+.theme-toggle-wrapper svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ── Mode toggle (Simple / Advanced) ──────────────────── */
+
+.mode-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0 var(--space-sm);
+}
+
+.mode-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color var(--transition-fast);
+  user-select: none;
+}
+
+/* Mode toggle color: red when simple (advanced off), green when advanced (on) */
+#mode-toggle { background: var(--error); }
+#mode-toggle:checked { background: var(--success); }
+
+/* Highlight active label based on data-simple-mode attribute on <html> */
+[data-simple-mode="true"] .mode-label-simple { color: var(--text-primary); }
+[data-simple-mode="true"] .mode-label-advanced { color: var(--text-muted); }
+html:not([data-simple-mode="true"]) .mode-label-advanced { color: var(--text-primary); }
+
+/* ── App title ────────────────────────────────────────── */
+
+.app-title {
+  line-height: 1;
+}
+
+/* Logo scales to fit the header without overflowing */
+.app-logo {
+  height: 2.2rem;
+  width: auto;
+  display: block;
+  filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(239, 68, 68, 0.8)) drop-shadow(0 0 20px rgba(239, 68, 68, 0.5));
+}
+
+/* Dark ink works on light backgrounds without inversion */
+[data-theme="light"] .app-logo {
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8)) drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+}

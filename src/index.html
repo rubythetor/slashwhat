@@ -1,0 +1,138 @@
+<!-- © 2026 slashwhat. MIT License. -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>slashwhat — Free Visual Subnet Calculator & CIDR Planner</title>
+  <meta name="description" content="Free visual subnet calculator and CIDR planner. Split and join subnets interactively with color-coded tables, VLAN macros, undo/redo, and CSV export. No signup, no backend — runs entirely in your browser.">
+  <meta name="keywords" content="subnet calculator, CIDR planner, visual subnet splitter, IP address planner, network calculator, VLAN planning, IPv4, IPv6, subnet mask, network engineering">
+  <link rel="canonical" href="https://slashwhat.net/">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://slashwhat.net/">
+  <meta property="og:title" content="slashwhat — Free Visual Subnet Calculator & CIDR Planner">
+  <meta property="og:description" content="Split and join subnets interactively with color-coded tables, VLAN macros, and CSV export. No signup — runs entirely in your browser.">
+  <meta property="og:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="og:site_name" content="slashwhat">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="slashwhat — Free Visual Subnet Calculator">
+  <meta name="twitter:description" content="Split and join subnets interactively with color-coded tables. Free, no signup, runs in your browser.">
+  <meta name="twitter:image" content="https://slashwhat.net/img/og-image.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/calculator.css">
+  <link rel="stylesheet" href="css/table-cells.css">
+  <link rel="stylesheet" href="css/table-extras.css">
+  <link rel="stylesheet" href="css/column-controls.css">
+  <link rel="stylesheet" href="css/color-controls.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "slashwhat",
+    "url": "https://slashwhat.net/",
+    "description": "Free visual subnet calculator and CIDR planner. Split and join subnets interactively with color-coded tables, VLAN macros, and CSV export.",
+    "applicationCategory": "NetworkingApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["IPv4 subnet splitting", "IPv6 support", "VLAN macro language", "Color-coded subnet tables", "Undo/redo", "Save/load configurations", "CSV export", "Binary visualization"]
+  }
+  </script>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- Skip to main content for keyboard/screen reader users (F-19) -->
+  <a href="#splitter-table-container" class="skip-link">Skip to table</a>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="app-header-left">
+      <h1 class="app-title">
+        <img src="img/logo.png" alt="slashwhat" class="app-logo">
+        <span class="sr-only">slashwhat — Visual Subnet Calculator</span>
+      </h1>
+    </div>
+    <div class="config-buttons">
+      <button class="btn btn-secondary btn-sm" id="save-config-btn" title="Save configuration">Save</button>
+      <button class="btn btn-secondary btn-sm" id="load-config-btn" title="Load configuration">Load</button>
+      <button class="btn btn-secondary btn-sm" id="export-csv-btn" title="Export to CSV">Export</button>
+      <button class="btn btn-danger btn-sm" id="reset-btn" title="Clear all subnets">Reset</button>
+    </div>
+    <div class="header-right">
+      <div class="mode-toggle-wrapper">
+        <span class="mode-label mode-label-simple">Simple</span>
+        <input type="checkbox" class="toggle" id="mode-toggle"
+               aria-label="Toggle simple or advanced mode" checked>
+        <span class="mode-label mode-label-advanced">Advanced</span>
+      </div>
+      <div class="theme-toggle-wrapper">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <input type="checkbox" class="toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Subnet Splitter -->
+    <section id="splitter" class="view-section active">
+      <div id="splitter-table-container"></div>
+      <noscript>
+        <div style="max-width:700px;margin:40px auto;padding:24px;color:#e2e8f0;font-family:sans-serif;line-height:1.6">
+          <h2>slashwhat — Visual Subnet Calculator & CIDR Planner</h2>
+          <p>slashwhat is a free, browser-based visual subnet calculator for network engineers. Enter any CIDR block (like 10.0.0.0/8 or 192.168.0.0/16) and interactively split and join subnets in a color-coded table.</p>
+          <p>Features include: IPv4 and IPv6 support, VLAN macro language, multiple color themes, undo/redo, save/load configurations, CSV export, binary visualization, and RFC classification.</p>
+          <p>No signup required. No backend. Everything runs in your browser. Enable JavaScript to use the calculator.</p>
+        </div>
+      </noscript>
+    </section>
+  </main>
+
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <nav class="app-footer-nav" aria-label="Site pages">
+      <a href="getting-started.html">Getting Started</a>
+      <span class="footer-sep" aria-hidden="true">&middot;</span>
+      <span class="load-example-link">Load Example</span>
+      <span class="footer-sep" aria-hidden="true">&middot;</span>
+      <a href="docs.html">Docs</a>
+      <span class="footer-sep" aria-hidden="true">&middot;</span>
+      <a href="strategy.html">Strategy</a>
+      <span class="footer-sep" aria-hidden="true">&middot;</span>
+      <a href="about.html">About</a>
+      <span class="footer-sep" aria-hidden="true">&middot;</span>
+      <a href="https://github.com/rubythetor/slashwhat" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <p>&copy; 2026 slashwhat <span id="app-version">dev</span>. <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>.</p>
+    <p class="footer-disclaimer">This project is 100% written by AI. The author was inspired by <a href="https://www.davidc.net/sites/default/subnets/subnets.html" target="_blank" rel="noopener">davidc.net</a> and also recommends <a href="https://visualsubnetcalc.com" target="_blank" rel="noopener">visualsubnetcalc.com</a>.</p>
+  </footer>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

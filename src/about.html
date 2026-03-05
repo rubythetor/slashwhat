@@ -1,0 +1,1093 @@
+<!-- © 2026 slashwhat. MIT License. -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — slashwhat Visual Subnet Calculator</title>
+  <meta name="description" content="How slashwhat was built: a network engineer and AI coding agent built a visual subnet calculator from scratch using natural language prompts. Architecture, pipeline, and the full story.">
+  <link rel="canonical" href="https://slashwhat.net/about.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://slashwhat.net/about.html">
+  <meta property="og:title" content="About — slashwhat Visual Subnet Calculator">
+  <meta property="og:description" content="How a network engineer and AI coding agent built a visual subnet calculator from scratch using natural language prompts.">
+  <meta property="og:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="og:site_name" content="slashwhat">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About — slashwhat Visual Subnet Calculator">
+  <meta name="twitter:description" content="How a network engineer built a subnet calculator without writing code.">
+  <meta name="twitter:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="article:published_time" content="2025-02-01">
+  <meta name="keywords" content="AI coding, subnet calculator, software architecture, CI/CD pipeline, Claude AI, pair programming">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About — slashwhat Visual Subnet Calculator",
+    "description": "How a network engineer and AI coding agent built a visual subnet calculator from scratch using natural language prompts.",
+    "url": "https://slashwhat.net/about.html",
+    "isPartOf": { "@type": "WebApplication", "name": "slashwhat", "url": "https://slashwhat.net/" }
+  }
+  </script>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <div class="app-header-left">
+      <a href="index.html" class="about-logo-link">
+        <img src="img/logo.png" alt="slashwhat" class="app-logo">
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="back-to-app">&larr; Return to app</a>
+      <div class="theme-toggle-wrapper">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <input type="checkbox" class="toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="about-content">
+
+    <h1 class="about-title">About the Codebase</h1>
+
+    <nav class="tab-bar" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="how-it-works">How It Works</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="process">Process</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="pipeline">Pipeline</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="rules">Rules</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="code">See the Code</button>
+      <button class="tab tab-accent" role="tab" aria-selected="false" data-tab="brewery">Brewery Story</button>
+    </nav>
+
+    <!-- ══════════════════════════════════════════ OVERVIEW ══════ -->
+    <section class="tab-panel active" id="panel-overview" role="tabpanel">
+
+      <h2>An experiment in vibe coding</h2>
+      <p>
+        slashwhat is a visual subnet splitter. It lets network engineers type a
+        CIDR block and interactively divide and join subnets in a color-coded
+        table &mdash; instantly, in the browser, with zero backend. The
+        project was inspired by David C's
+        <a href="https://www.davidc.net/sites/default/subnets/subnets.html"
+           target="_blank" rel="noopener">Visual Subnet Calculator</a>.
+      </p>
+      <p>
+        <strong>Every single line of code was written by Claude Code</strong>
+        (Anthropic's AI coding agent). Every JavaScript module, every CSS file,
+        every unit test, every CI script, this about page, the
+        <a href="docs.html">docs page</a>, the
+        <a href="getting-started.html">getting started guide</a>, the
+        <a href="strategy.html">subnetting strategy guide</a> &mdash;
+        literally everything. No human wrote any code. The project was
+        authored &mdash; that is, directed, reviewed, and prompted &mdash; by a
+        network engineer who cannot write code. Claude Code was the sole
+        developer across 77 commits over 4 days.
+      </p>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">{{STAT_TOTAL_LINES}}</div><div class="stat-label">Total lines</div></div>
+        <div class="stat-card"><div class="stat-number">{{STAT_TEST_COUNT}}</div><div class="stat-label">Unit tests</div></div>
+        <div class="stat-card"><div class="stat-number">95%+</div><div class="stat-label">Line coverage</div></div>
+        <div class="stat-card"><div class="stat-number">77</div><div class="stat-label">Git commits</div></div>
+        <div class="stat-card"><div class="stat-number">25</div><div class="stat-label">Coding sessions</div></div>
+        <div class="stat-card"><div class="stat-number">4</div><div class="stat-label">Days to build</div></div>
+        <div class="stat-card"><div class="stat-number">0</div><div class="stat-label">npm dependencies</div></div>
+      </div>
+
+      <h3>Lines of code by category</h3>
+      <table class="data-table">
+        <thead><tr><th>Category</th><th class="num">Lines</th></tr></thead>
+        <tbody>
+          <tr><td>JavaScript (source)</td><td class="num">{{STAT_JS_LINES}}</td></tr>
+          <tr><td>CSS</td><td class="num">{{STAT_CSS_LINES}}</td></tr>
+          <tr><td>HTML</td><td class="num">{{STAT_HTML_LINES}}</td></tr>
+          <tr><td>Unit tests</td><td class="num">{{STAT_TEST_LINES}}</td></tr>
+          <tr><td>CI/CD scripts</td><td class="num">{{STAT_CI_LINES}}</td></tr>
+          <tr class="row-total"><td>Total</td><td class="num">{{STAT_TOTAL_LINES}}</td></tr>
+        </tbody>
+      </table>
+
+      <h3>What "zero dependencies" means</h3>
+      <p>
+        There is no <code>package.json</code>, no <code>node_modules</code>, no
+        npm, no bundler in development. Source files use native ES modules loaded
+        directly by the browser. The only build tool is <strong>esbuild</strong>,
+        downloaded on-the-fly in CI to bundle production deploys. Tests use
+        Node's built-in <code>node:test</code> runner and <code>node:assert</code>
+        &mdash; zero external test frameworks.
+      </p>
+    </section>
+
+    <!-- ═══════════════════════════════════════ HOW IT WORKS ══════ -->
+    <section class="tab-panel" id="panel-how-it-works" role="tabpanel">
+
+      <h2>Everything lives in the browser</h2>
+      <p>
+        There is no server. No database. No API calls. When you type a CIDR block
+        and press Enter, everything happens in your browser's memory. The page
+        could work offline after the first load.
+      </p>
+
+      <div class="concept-card">
+        <h3>The object model: a forest of binary trees</h3>
+        <p>
+          The core data structure is a <strong>forest</strong> &mdash; an array
+          of binary trees. Each tree starts from a single CIDR block that you
+          type in. When you split a /24 into two /25s, the original node gains
+          two children. Split again and those children gain children. The tree
+          can grow to any depth the IP address space allows.
+        </p>
+        <p>
+          Joining reverses this: select two sibling subnets and they merge back
+          into their parent. The tree structure means splits and joins are always
+          mathematically correct &mdash; you can only split a node into its two
+          halves, and you can only join nodes that share a parent.
+        </p>
+        <p>
+          Each node in the tree carries metadata: a name, description, notes,
+          section ID, and VLAN assignment. When you split a node, children can
+          inherit the parent's metadata. When you join two nodes that both have
+          names, a conflict resolution popup lets you pick which to keep.
+        </p>
+        <pre><code>Forest (array of trees)
+  Tree 1: 10.0.0.0/8
+    10.0.0.0/9
+      10.0.0.0/10  "Servers"
+      10.64.0.0/10 "Clients"
+    10.128.0.0/9   "DMZ"
+
+  Tree 2: 192.168.0.0/16
+    192.168.0.0/17   "Office"
+    192.168.128.0/17 "Lab"</code></pre>
+      </div>
+
+      <div class="concept-card">
+        <h3>State serialization: one object captures everything</h3>
+        <p>
+          A single function &mdash; <code>serializeForest()</code> &mdash; walks
+          every tree and every node to produce a plain JavaScript object that
+          captures the entire application state: every subnet, every name, every
+          display setting, column order, visibility, and color theme. This object
+          is about 5&ndash;10 KB as JSON text.
+        </p>
+        <p>
+          This serialization pipeline powers four features at once:
+        </p>
+        <ul class="feature-list">
+          <li><strong>Autosave</strong> &mdash; after every action, state is
+            serialized and written to <code>localStorage</code>. Refresh the
+            page and everything comes back exactly as you left it.</li>
+          <li><strong>Save/Load</strong> &mdash; the same JSON is written to a
+            file you download, and loaded from a file you upload.</li>
+          <li><strong>Export</strong> &mdash; CSV export walks the same
+            serialized structure to produce tabular output.</li>
+          <li><strong>Undo/Redo</strong> &mdash; each action captures a snapshot
+            that can be restored later.</li>
+        </ul>
+      </div>
+
+      <div class="concept-card">
+        <h3>How Ctrl+Z works</h3>
+        <p>
+          The undo system is a 50-level in-memory stack. Every time you take an
+          action (split, join, edit a name, change a color), the current state is
+          serialized into a JSON string and pushed onto the undo stack.
+        </p>
+        <p>
+          When you press Ctrl+Z, the system pops the most recent snapshot from
+          the undo stack, pushes the <strong>current</strong> state onto the redo
+          stack, then restores the popped snapshot. Ctrl+Shift+Z does the
+          reverse. If you take a new action after undoing, the redo stack is
+          cleared &mdash; the standard behavior users expect.
+        </p>
+        <p>
+          At ~10 KB per snapshot, 50 levels costs about 500 KB of memory. The
+          entire undo manager is 51 lines of code with no DOM access &mdash; it
+          stores and returns opaque strings. A <code>_skipUndoCapture</code>
+          flag prevents the restore itself from creating a new snapshot.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>The render cycle</h3>
+        <p>
+          Every state change flows through the same four-step pipeline:
+        </p>
+        <ol class="cycle-list">
+          <li><strong>Mutate</strong> &mdash; change the tree model (split, join,
+            edit, reorder columns, change theme)</li>
+          <li><strong>Render</strong> &mdash; <code>renderTable()</code> rebuilds
+            the entire HTML table from scratch. No virtual DOM, no diffing. The
+            table is rebuilt from the tree model every time.</li>
+          <li><strong>Wire</strong> &mdash; <code>wireEventHandlers()</code>
+            attaches click, input, and keyboard handlers to the fresh DOM
+            elements.</li>
+          <li><strong>Save</strong> &mdash; <code>autoSave()</code> serializes
+            state to localStorage and captures an undo snapshot.</li>
+        </ol>
+        <p>
+          This is deliberately simple. There is no React, no state management
+          library, no reactive bindings. The tree model is the single source of
+          truth and the DOM is rebuilt on every change. For a table with dozens
+          of rows, this is fast enough that there is no perceptible delay.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>The VLAN macro language</h3>
+        <p>
+          The VLAN column supports a small expression language called VML (VLAN
+          Macro Language). Instead of manually typing VLAN IDs for every subnet,
+          you write a template like <code>100 + $3</code> and the system
+          evaluates it for each row, substituting <code>$3</code> with the
+          third octet of that row's IP address.
+        </p>
+        <p>
+          VML supports arithmetic (+, -, *, /), octet variables ($1 through $4),
+          digit-slicing modifiers ($3l, $3r, $3ll, $3rr), and conditional
+          expressions. A full parser and evaluator handle the language in about
+          235 lines.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ THE PROCESS ══════ -->
+    <section class="tab-panel" id="panel-process" role="tabpanel">
+
+      <h2>How a network engineer built an app without writing code</h2>
+      <p>
+        The author of slashwhat is a network engineer. Not a developer, not
+        a CS grad, not someone who writes JavaScript on weekends. The entire
+        project was built by giving natural-language instructions to Claude Code
+        (Anthropic's AI coding agent running in a terminal) and reviewing what
+        it produced.
+      </p>
+      <p>
+        The workflow is simple: the author types a prompt describing what he
+        wants, and the AI reads the codebase, edits files, runs builds, and
+        commits &mdash; all in the terminal. Here is what that actually looks like:
+      </p>
+      <img src="img/process-screenshot.png" alt="Screenshot of the prompt-driven workflow in Claude Code" class="process-screenshot">
+      <p>
+        Over 25 coding sessions across 4 days, the process looked like this:
+        describe what you want, watch the AI build it, test it in the browser,
+        give feedback, repeat. Some sessions focused on building features
+        ("add a VLAN column"). Others focused entirely on quality ("run a full
+        code audit and fix every finding"). The human never touched a code
+        editor.
+      </p>
+
+      <h3>Where the time went</h3>
+      <p>
+        The 77 commits break down into five categories. Less than a third of the
+        work was building new features &mdash; the majority went into quality
+        assurance, polish, infrastructure, and bug fixes.
+      </p>
+
+      <div class="time-split">
+        <div class="time-bar">
+          <div class="time-segment seg-feature" style="width: 31.2%"><span>Feature 31%</span></div>
+          <div class="time-segment seg-polish" style="width: 20.8%"><span>Polish 21%</span></div>
+          <div class="time-segment seg-quality" style="width: 18.2%"><span>QA 18%</span></div>
+          <div class="time-segment seg-infra" style="width: 16.9%"><span>Infra 17%</span></div>
+          <div class="time-segment seg-bugfix" style="width: 12.9%"><span>Fix 13%</span></div>
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead><tr><th>Category</th><th class="num">Commits</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Features</td><td class="num">24</td><td>Forest mode, VLAN macros, undo/redo, color themes, naming modes</td></tr>
+          <tr><td>Polish</td><td class="num">16</td><td>Logo, hero animation, column controls, padding adjustments, UX tweaks</td></tr>
+          <tr><td>Quality / Audit</td><td class="num">14</td><td>131-finding code audit, test coverage, security hardening, why-comments</td></tr>
+          <tr><td>Infrastructure</td><td class="num">13</td><td>CI pipeline, staging deploy, smoke tests, preflight scanner, esbuild</td></tr>
+          <tr><td>Bug fixes</td><td class="num">10</td><td>IPv6 parsing, race conditions, DOM leaks, XSS fix, layout shifts</td></tr>
+          <tr class="row-total"><td>Total</td><td class="num">77</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <h3>What the human actually does</h3>
+      <p>
+        The human's role is closer to an architect or product manager than a
+        developer. Typical instructions ranged from high-level ("add a VLAN
+        column with a macro language") to pixel-level ("move the hint text one
+        line below the controls and add more spacing between the keyboard
+        shortcuts"). The human reviewed screenshots, caught visual bugs the AI
+        could not see, and made design decisions the AI could not make on its
+        own.
+      </p>
+      <p>
+        The AI handled everything else: architecture, implementation, testing,
+        debugging, security hardening, build system, deployment pipeline, and
+        the page you are reading right now.
+      </p>
+    </section>
+
+    <!-- ════════════════════════════════════════ PIPELINE ══════ -->
+    <section class="tab-panel" id="panel-pipeline" role="tabpanel">
+
+      <h2>Five-stage quality gate pipeline</h2>
+      <p>
+        Every push to <code>main</code> runs a sequential pipeline. Each stage
+        must pass before the next starts. Nothing reaches production without
+        passing every gate. The entire pipeline &mdash; every script, every gate,
+        every check &mdash; was written by AI following the author's prompts and
+        architectural direction.
+      </p>
+
+      <div class="pipeline-stages">
+        <div class="pipeline-stage">
+          <div class="stage-badge">1</div>
+          <div class="stage-content">
+            <h4>CHECK <span class="stage-meta">(parallel jobs)</span></h4>
+            <div class="stage-jobs">
+              <div class="stage-job">
+                <strong>Preflight scan</strong> &mdash; Scans source for
+                forbidden files, secrets, infrastructure hostnames, debug
+                artifacts, and oversized files. Any failure blocks the pipeline.
+              </div>
+              <div class="stage-job">
+                <strong>Unit tests</strong> &mdash; Runs all 553 tests with
+                coverage thresholds: 95% lines, 90% branches. Node is
+                downloaded on-the-fly (the runner has no pre-installed runtime).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pipeline-connector"></div>
+
+        <div class="pipeline-stage">
+          <div class="stage-badge">2</div>
+          <div class="stage-content">
+            <h4>BUILD</h4>
+            <p>
+              Bundles all JS into a single file via esbuild, minifies CSS
+              file-by-file, adds copyright banners. Eliminates the ~40-request
+              module waterfall. Typical compression: 58%.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-connector"></div>
+
+        <div class="pipeline-stage">
+          <div class="stage-badge">3</div>
+          <div class="stage-content">
+            <h4>DEPLOY <span class="stage-meta">(staging)</span></h4>
+            <p>
+              Copies the minified output to the staging web server. Only
+              validated, bundled code touches the server.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-connector"></div>
+
+        <div class="pipeline-stage">
+          <div class="stage-badge">4</div>
+          <div class="stage-content">
+            <h4>VERIFY</h4>
+            <p>
+              Smoke test hits the live staging site. Verifies HTTP 200 for every
+              referenced asset, checks DOM structure, and validates cache
+              headers. Uses zero hardcoded paths &mdash; reads the live page
+              and checks whatever references it finds.
+            </p>
+          </div>
+        </div>
+
+        <div class="pipeline-connector"></div>
+
+        <div class="pipeline-stage stage-manual">
+          <div class="stage-badge">5</div>
+          <div class="stage-content">
+            <h4>RELEASE <span class="stage-meta">(manual gate)</span></h4>
+            <p>
+              Only available after all 4 automated stages pass. Triggered
+              manually from the pipeline UI. Deploys to Cloudflare Pages
+              via Direct Upload. This is the only path to production.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <h3>What the preflight blocks</h3>
+      <table class="data-table">
+        <thead><tr><th>Check</th><th>What it catches</th></tr></thead>
+        <tbody>
+          <tr><td>Forbidden files</td><td>Build configs, environment files, test files, version control metadata</td></tr>
+          <tr><td>Secrets</td><td>API tokens, private keys, password assignments, bearer tokens</td></tr>
+          <tr><td>Hostnames</td><td>Internal infrastructure domains, SSH usernames, staging hosts</td></tr>
+          <tr><td>Debug artifacts</td><td>Local dev URLs, debug statements, breakpoints</td></tr>
+          <tr><td>Styling</td><td>Italic elements &mdash; a design constraint for this project</td></tr>
+          <tr><td>File size</td><td>Anything over 500 KB (catches accidental binary uploads)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Testing at four levels</h3>
+      <div class="test-types">
+        <div class="test-type">
+          <h4>Unit tests (553 cases)</h4>
+          <p>
+            Every core module has exhaustive tests covering normal paths,
+            edge cases, error handling, and boundary conditions. The
+            test-to-source ratio is 74% (3,839 test lines covering 5,153
+            source lines).
+          </p>
+        </div>
+        <div class="test-type">
+          <h4>Security scanning</h4>
+          <p>
+            The preflight gate scans every source file for secrets, debug
+            artifacts, infrastructure hostnames, and forbidden files.
+            Regex-based, runs on every push.
+          </p>
+        </div>
+        <div class="test-type">
+          <h4>Smoke tests</h4>
+          <p>
+            After deploying to staging, a smoke test hits the live site and
+            verifies every referenced asset loads correctly. Checks DOM
+            structure and validates cache headers.
+          </p>
+        </div>
+        <div class="test-type">
+          <h4>Build verification</h4>
+          <p>
+            The esbuild bundle step itself is a test: broken imports, syntax
+            errors, or circular dependencies cause a build failure that stops
+            the pipeline.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ CODE RULES ══════ -->
+    <section class="tab-panel" id="panel-rules" role="tabpanel">
+
+      <h2>CLAUDE.md &mdash; the AI's instruction manual</h2>
+      <p>
+        This project is governed by a <code>CLAUDE.md</code> file that lives in
+        the repository root. It is not documentation for humans. It is a
+        <strong>contract between the human author and the AI coding agent</strong>
+        &mdash; a set of binding instructions that shapes every line of code the
+        AI writes. When Claude Code opens this project, the first thing it reads
+        is CLAUDE.md. Every decision flows from it.
+      </p>
+      <p>
+        The file covers architecture, code quality, testing, deployment, and
+        environment details. Below is a deep look at each rule and the reasoning
+        behind it.
+      </p>
+
+      <div class="rules-section">
+        <h3>Rule 1: Separate logic from display &mdash; always</h3>
+        <p>
+          This is the <strong>single most important rule</strong> in the file,
+          and it is stated first for a reason. Domain logic &mdash; subnet math,
+          tree operations, naming, parsing &mdash; lives in
+          <code>src/js/core/</code>. Display logic &mdash; DOM manipulation,
+          event handlers, HTML generation &mdash; lives in
+          <code>src/js/views/</code> and <code>src/js/ui/</code>.
+        </p>
+        <p>
+          Core modules must <strong>never</strong> import from views or UI. They
+          must never touch the DOM, never reference <code>document</code>, and
+          never produce HTML strings. This boundary is described as
+          "non-negotiable" in the file.
+        </p>
+        <p>
+          The payoff is testability. Because core modules are pure functions with
+          no side effects, they can be tested in Node.js without any browser
+          environment. The 553 unit tests run in under a second because they
+          never touch a DOM.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 2: Comments explain "why", never "what" or "how"</h3>
+        <p>
+          This is the most distinctive rule in the project. Every function and
+          every non-obvious block must have a comment explaining
+          <strong>why</strong> it exists &mdash; the problem it solves, the
+          design decision behind it. Comments that restate what the code does
+          ("Gets the name path") or describe how it works ("Loops through parent
+          pointers") are explicitly banned.
+        </p>
+        <p>
+          The reasoning is specific to AI-authored code: in this project, the
+          primary audience for comments is <strong>future AI agents</strong>.
+          The code already says "what" and "how" &mdash; an AI can read the
+          implementation. What an AI cannot infer is <strong>intent</strong>.
+          The "why" comment is the clue that lets a future agent understand the
+          purpose well enough to modify the code without breaking the contract.
+        </p>
+        <pre><code>// Good: explains WHY &mdash; intent, purpose, the problem
+// Walk leaf&rarr;root to build the full hierarchical name (e.g. "Servers-Web-1")
+function getNamePath(leaf) { ... }
+
+// Bad: restates WHAT the code does
+// Gets the name path
+function getNamePath(leaf) { ... }
+
+// Bad: describes HOW it works
+// Loops through parent pointers and collects labels into an array
+function getNamePath(leaf) { ... }</code></pre>
+        <p>
+          The CLAUDE.md adds: "When adding or modifying a function, always add
+          or update its why-comment. When a block of code handles an edge case,
+          explain what triggers it and why the special handling is needed." The
+          131-finding audit added 44 missing why-comments in a single pass.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 3: Unit tests &mdash; 95% coverage minimum</h3>
+        <p>
+          All core modules must have unit tests with at least <strong>95% line
+          coverage and 90% branch coverage</strong>. These thresholds are
+          enforced in CI &mdash; the pipeline fails if coverage drops below them.
+        </p>
+        <p>
+          The CLAUDE.md is explicit about timing: "Any time a core module is
+          changed, the corresponding test file must be updated
+          <strong>in the same commit</strong>." This prevents the common pattern
+          where code changes accumulate and tests are "added later" (which means
+          never).
+        </p>
+        <p>
+          The real purpose of 95% coverage is not catching bugs &mdash; it is
+          <strong>enabling fearless refactoring</strong>. When every behavior has
+          a test, the AI can restructure code, extract modules, or change
+          implementations knowing that any regression will be caught immediately.
+          The tests are the safety net that makes the 300-line file limit
+          practical.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 4: File size limit &mdash; 200 to 300 lines</h3>
+        <p>
+          No source file should exceed 300 lines. The CLAUDE.md is careful to
+          explain the intent: "The goal of this constraint is readability and
+          good organization, not packing code densely." It is not about fitting
+          on a screen &mdash; it is about forcing the AI to decompose
+          responsibilities into focused modules.
+        </p>
+        <p>
+          The view layer demonstrates this in practice. What could have been a
+          single 4,000-line view file is instead split into 16 focused modules:
+          one for rendering, one for events, one for column controls, one for
+          color pickers, and so on. Each file has a single responsibility and a
+          clear "why" at the top.
+        </p>
+        <p>
+          The practical benefit for AI agents: each file is small enough to fit
+          entirely in the AI's context window. An agent can read the full file,
+          understand its purpose, make a change, and verify it without needing to
+          track state across thousands of lines.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 5: No deep nesting</h3>
+        <p>
+          Functions should not nest beyond 2&ndash;3 levels of indentation.
+          The CLAUDE.md gives a specific example: "If you find yourself writing
+          <code>if</code> inside <code>for</code> inside <code>if</code> inside
+          a callback, extract the inner logic into a named function."
+        </p>
+        <p>
+          Named functions with clear why-comments are always better than
+          anonymous deeply nested blocks. This rule reinforces the why-comment
+          rule: extracting logic into a named function creates a natural place
+          for a comment explaining the extracted responsibility.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 6: No dead code</h3>
+        <p>
+          No commented-out code, unused imports, unused functions, or unused CSS
+          rules. The CLAUDE.md states: "Delete them. Version control exists for
+          recovery."
+        </p>
+        <p>
+          This is especially important in AI-authored code. An AI agent sees
+          commented-out code and may try to use it, reference it, or maintain
+          compatibility with it. Dead code creates false signals about the
+          codebase's intent. Seven deprecated views (aggregator, mask-convert,
+          overlap, cheatsheet, vlsm, ip-checker, cidr-calc) were built during
+          early development and deleted entirely when the project focused on the
+          subnet splitter.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 7: No backend, no bundler, no dependencies</h3>
+        <p>
+          There is no server, no API, no fetch calls to a backend. Source files
+          use native ES modules loaded directly by the browser. There is no
+          webpack, no vite, no npm in development. The only build tool (esbuild)
+          runs exclusively in CI.
+        </p>
+        <p>
+          Zero dependencies means zero supply chain risk. No
+          <code>package.json</code> means no <code>npm audit</code> alerts, no
+          abandoned transitive dependencies, no version conflicts. The entire
+          application runs on what the browser provides natively.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>Rule 8: Content-hashed cache busting</h3>
+        <p>
+          Source files use bare filenames &mdash; no manual
+          <code>?v=N</code> query strings anywhere. The build script renames
+          every JS and CSS file with a content hash
+          (e.g. <code>main-a1b2c3d4.js</code>) and rewrites all HTML references
+          to match. Change a file, the hash changes, browsers fetch the new
+          version. No manual version bumps needed.
+        </p>
+        <p>
+          The CI preflight check rejects any <code>?v=N</code> in source files
+          to prevent regressions. HTML pages are served with
+          <code>no-cache</code> so the browser always fetches the latest
+          references, while hashed assets are served with
+          <code>Cache-Control: public, immutable</code> for maximum performance.
+        </p>
+      </div>
+
+      <div class="rules-section">
+        <h3>How the rules reinforce each other</h3>
+        <p>
+          The rules are not independent &mdash; they form a self-reinforcing
+          system. The 300-line limit forces modular decomposition. Modular files
+          are easy to test. High test coverage enables fearless refactoring.
+          Refactoring keeps files under 300 lines. Why-comments preserve intent
+          across refactors. No dead code prevents false signals. The preflight
+          scanner enforces the no-dead-code rule automatically.
+        </p>
+        <p>
+          Together, these rules produce a codebase that is legible to both humans
+          and AI agents: small files, clear intent, a test for every behavior,
+          and zero accumulation of debt.
+        </p>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════ SEE THE CODE ══════ -->
+    <section class="tab-panel" id="panel-code" role="tabpanel">
+
+      <h2>Browse the source</h2>
+      <p>
+        The full source is on <a href="https://github.com/rubythetor/slashwhat" target="_blank" rel="noopener">GitHub</a>.
+        Click any module below to view its source code with comments. Every
+        function has a "why" comment explaining its purpose &mdash; these
+        comments are the clues that let the next AI agent (or human) understand
+        the intent behind the code.
+      </p>
+
+      <div class="layer-diagram">
+        <div class="layer layer-core">
+          <h4>src/js/core/ &mdash; Pure logic (15 modules)</h4>
+          <p>No DOM. No side effects. Testable in isolation.</p>
+          <div class="module-grid">
+            <div class="module" data-path="core/subnet.js"><strong>subnet.js</strong> Subnet class: address math, masks, host counts</div>
+            <div class="module" data-path="core/config.js"><strong>config.js</strong> Serialize / deserialize configurations</div>
+            <div class="module" data-path="core/vlan-macro.js"><strong>vlan-macro.js</strong> VLAN macro language parser and evaluator</div>
+            <div class="module" data-path="core/ipv6.js"><strong>ipv6.js</strong> IPv6 parsing, compression, validation</div>
+            <div class="module" data-path="core/config-validate.js"><strong>config-validate.js</strong> Config file validation rules</div>
+            <div class="module" data-path="core/color-assign.js"><strong>color-assign.js</strong> 7 color strategies for row coloring</div>
+            <div class="module" data-path="core/splitter.js"><strong>splitter.js</strong> Binary tree: build, split, merge, traverse</div>
+            <div class="module" data-path="core/parse.js"><strong>parse.js</strong> User input parsing and display formatting</div>
+            <div class="module" data-path="core/ipv4.js"><strong>ipv4.js</strong> IPv4 parsing and validation</div>
+            <div class="module" data-path="core/bitmask.js"><strong>bitmask.js</strong> Bit manipulation for subnet masks</div>
+            <div class="module" data-path="core/constants.js"><strong>constants.js</strong> RFC ranges, private ranges, well-known prefixes</div>
+            <div class="module" data-path="core/naming.js"><strong>naming.js</strong> Hierarchical name labels and separator inheritance</div>
+            <div class="module" data-path="core/forest.js"><strong>forest.js</strong> Multi-tree forest management</div>
+            <div class="module" data-path="core/color-themes.js"><strong>color-themes.js</strong> 16 color palettes, 7 color modes</div>
+            <div class="module" data-path="core/undo.js"><strong>undo.js</strong> 50-level undo/redo stack</div>
+          </div>
+        </div>
+
+        <div class="layer layer-views">
+          <h4>src/js/views/ &mdash; DOM rendering ({{STAT_VIEW_MODULES}} modules)</h4>
+          <p>HTML generation, event handlers, user interaction.</p>
+          <div class="module-grid">
+            <div class="module" data-path="views/splitter-view.js"><strong>splitter-view.js</strong> Orchestrator: state, init, undo/redo</div>
+            <div class="module" data-path="views/event-wiring.js"><strong>event-wiring.js</strong> Event handler wiring after each render</div>
+            <div class="module" data-path="views/table-render.js"><strong>table-render.js</strong> Column defs, cell renderers, table header</div>
+            <div class="module" data-path="views/color-controls.js"><strong>color-controls.js</strong> Color mode picker, theme picker</div>
+            <div class="module" data-path="views/table-events.js"><strong>table-events.js</strong> Click/keyboard event handler wiring</div>
+            <div class="module" data-path="views/hero-animation.js"><strong>hero-animation.js</strong> Empty-state typing demo animation</div>
+            <div class="module" data-path="views/header-menus.js"><strong>header-menus.js</strong> Popup menus for range/number format</div>
+            <div class="module" data-path="views/tree-rows.js"><strong>tree-rows.js</strong> Tree header and data row generation</div>
+            <div class="module" data-path="views/config-io.js"><strong>config-io.js</strong> Save, load, export, autosave</div>
+            <div class="module" data-path="views/vlan-menu.js"><strong>vlan-menu.js</strong> VLAN settings popup with presets</div>
+            <div class="module" data-path="views/merge-conflict.js"><strong>merge-conflict.js</strong> Join conflict resolution popup</div>
+            <div class="module" data-path="views/column-controls.js"><strong>column-controls.js</strong> Column reorder, hide/restore</div>
+            <div class="module" data-path="views/join-render.js"><strong>join-render.js</strong> Join column bar layout and cells</div>
+            <div class="module" data-path="views/header-edit.js"><strong>header-edit.js</strong> Inline editing for section metadata</div>
+            <div class="module" data-path="views/notes-popup.js"><strong>notes-popup.js</strong> Expandable notes popup</div>
+            <div class="module" data-path="views/input-validation.js"><strong>input-validation.js</strong> Real-time subnet input validation</div>
+            <div class="module" data-path="views/warning-badges.js"><strong>warning-badges.js</strong> Subnet warning indicators</div>
+            <div class="module" data-path="views/about-modal.js"><strong>about-modal.js</strong> Shortcut hints and about link</div>
+          </div>
+        </div>
+
+        <div class="layer layer-ui">
+          <h4>src/js/ui/ &mdash; Shared utilities (2 modules)</h4>
+          <p>Cross-cutting concerns used by both views and the page shell.</p>
+          <div class="module-grid">
+            <div class="module" data-path="ui/theme.js"><strong>theme.js</strong> Dark/light theme toggle with persistence</div>
+            <div class="module" data-path="ui/toast.js"><strong>toast.js</strong> Toast notification system</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ BREWERY REVIEW ══════ -->
+    <section class="tab-panel" id="panel-brewery" role="tabpanel">
+
+      <h2>The Brewery Code Review</h2>
+      <p>
+        The author of slashwhat wanted to explore the intersection between AI as
+        a coding tool and the power of social AI &mdash; what happens when you stop
+        treating AI as a solitary assistant and instead ask a team of AI personas
+        to collaborate like real people. So he gathered nine AI reviewers around a
+        table at a brewery and asked them to do what engineers do best: pull the
+        code apart, argue about it, and find everything that could go wrong.
+      </p>
+      <p>
+        Nine reviewers met at a brewery to take the slashwhat codebase apart.
+        This is what they said &mdash; formatted as a play, because code reviews
+        are best served with beer.
+      </p>
+      <div class="play-setting">
+        February 16, 2026 &mdash; 4:00 PM<br>
+        Hops &amp; Handles Brewery, corner table by the window<br>
+        Duration: approximately 35 minutes
+      </div>
+
+      <h3 class="play-scene">Dramatis Personae</h3>
+      <div class="play-cast">
+        <div class="play-cast-member"><strong>Maya</strong> &mdash; slashwhat expert</div>
+        <div class="play-cast-member"><strong>Justin</strong> &mdash; senior network engineer</div>
+        <div class="play-cast-member"><strong>Sissy</strong> &mdash; novice associate</div>
+        <div class="play-cast-member"><strong>Cucumber</strong> &mdash; appsec expert</div>
+        <div class="play-cast-member"><strong>Franklin</strong> &mdash; designer / UX engineer</div>
+        <div class="play-cast-member"><strong>Pablo</strong> &mdash; senior coder, code smell detector</div>
+        <div class="play-cast-member"><strong>Roxy</strong> &mdash; QA / test automation engineer</div>
+        <div class="play-cast-member"><strong>Tomas</strong> &mdash; DevOps / SRE</div>
+        <div class="play-cast-member"><strong>Nkechi</strong> &mdash; technical writer</div>
+      </div>
+
+      <p class="verbatim-notice">
+        The transcript below is the verbatim output of what the Claude Code team
+        said &mdash; unedited, unfiltered, exactly as generated.
+      </p>
+
+      <!-- ── OPENING ── -->
+      <h3 class="play-scene">Opening (4:00 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-lead">Team Lead:</strong> Alright everyone, thanks for coming. Maya's going to walk us through the slashwhat codebase. It's a client-side subnet splitter &mdash; zero backend, static HTML/CSS/JS. About 12,000 lines of code across 33 JS modules, 9 CSS files, 15 test files. Maya, give everyone the 30-second version.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> Sure. You type a CIDR block like <code>10.0.0.0/8</code> and the app gives you an interactive table where you can split and join subnets in a binary tree. Color-coded, named, with VLAN macros, undo/redo, save/load, CSV export. Everything runs in the browser. No npm, no bundler in dev, no backend. CI bundles with esbuild for production. Five-stage pipeline: preflight scan, unit tests, build, deploy staging, smoke test, then manual gate to Cloudflare Pages.</p>
+
+      <p class="play-line"><strong class="play-char char-lead">Team Lead:</strong> Perfect. Let's dig in. I want everyone heard, so jump in whenever. We're here to find what could go wrong.</p>
+
+      <!-- ── SCENE 1 ── -->
+      <h3 class="play-scene">Scene 1: Architecture &amp; Structure (4:03 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> Maya, I went through every file. Let me start with the elephant. <code>splitter-view.js</code> is 421 lines. Your own rules say 300 max. That's the orchestrator &mdash; state, rendering, undo, event wiring, hero animation dismissal, input row handling. It's a god object.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> You're right. It grew. When the forest model landed &mdash; multiple trees in one table &mdash; the orchestrator absorbed too much. The render function alone is 94 lines with 5+ levels of nesting. State variables alone are 17 objects at the module level.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> Exactly. I'd extract three things: undo/redo management into its own controller, state initialization into a state module, and the event wiring into a separate pass. That gets you under 200 lines for the orchestrator.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> From a user's perspective, does the god object actually cause bugs?</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> Not yet. But it's the kind of file where someone adds one more feature and breaks three others because the responsibility boundaries aren't clear. Fragility grows silently.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> Fair. The undo system is actually already a separate core module (<code>undo.js</code>, 49 lines). But the wiring between "capture snapshot" and "call render" still lives in splitter-view. That coupling is what makes it fat.</p>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> Can I jump in? As someone who'd need to onboard onto this codebase &mdash; 421 lines of orchestration is the hardest file to understand. I'd split it just for comprehension.</p>
+
+      <p class="play-line"><strong class="play-char char-lead">Team Lead:</strong> Noted. Pablo, what else?</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> <code>subnet.js</code> is 302 lines &mdash; just 2 over the limit, but it's doing IPv4, IPv6, RFC lookups, class info, binary visualization. The RFC/class methods could live in a <code>subnet-metadata.js</code> module. Also found code duplication in <code>color-assign.js</code> &mdash; six color strategy functions all have the identical "set bar colors" loop at the end. Should be a shared helper.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> The color assignment one is embarrassing. Six copies of the same three-line loop. I'll extract <code>setBarColors()</code>.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> One more &mdash; <code>about-modal.js</code> has a dead function: <code>attachAboutHandler()</code>. Comment says "kept so existing import sites don't break." That's exactly the kind of backwards-compat hack CLAUDE.md says to delete.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> Yeah, that should go. If nothing imports it, it's dead. If something does, fix the import.</p>
+
+      <!-- ── SCENE 2 ── -->
+      <h3 class="play-scene">Scene 2: Security (4:10 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> My turn. I went through this thing with a fine-tooth comb. The good news: no secrets in source, no API tokens, no internal hostnames. The preflight script catches <code>glpat-</code> tokens, private key blocks, localhost references, <code>debugger</code> statements, and <code>console.debug</code>. That's solid.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> The CSP policy on the staging server has <code>script-src 'self'</code> &mdash; no inline scripts, no eval. The about page had an inline script incident that's now fixed. Good discipline. Production on Cloudflare Pages has its own headers.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Input validation is thorough. <code>config-validate.js</code> has a 500-node cap, a column allowlist, CIDR validation, hex color regex, tree topology checks, and cross-tree ID uniqueness. That's genuinely good defensive parsing. I rarely see config import this well-validated.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Now the concern. <code>about.js</code> does a fetch where the path comes from <code>data-path</code> attributes in the HTML. The paths are hardcoded &mdash; things like <code>core/subnet.js</code>, <code>views/splitter-view.js</code>. But there's no validation that the path matches an allowlist. If someone injected a <code>data-path</code> with <code>../../etc/passwd</code>, the fetch would attempt that path.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> True, but the fetch goes to the same-origin web server. The staging server won't serve outside its document root. And in production on Cloudflare Pages, only the deployed files are accessible. The attacker would need to modify the page HTML first, which means they already have XSS &mdash; at which point fetch path traversal is the least of your problems.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Agreed it's low severity. But defense in depth says validate anyway. A simple regex allowlist on the path before fetching would close it completely.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> I'd also note that <code>code.textContent = text</code> is safe &mdash; using <code>textContent</code>, not <code>innerHTML</code>. Even if someone got arbitrary file content into that fetch, it renders as plain text.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Right, that's good. The XSS surface is well-controlled. <code>escapeHtml()</code> is used consistently in table rendering. <code>textContent</code> for user-supplied text. Config loading validates before deserializing. CSV export has formula injection prevention. I didn't find a single <code>innerHTML</code> assignment with unsanitized user input.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> One more thing &mdash; the <code>localStorage</code> autosave. It stores the full serialized config. If a user's browser is compromised, that data is readable. But it's just subnet configurations &mdash; no credentials, no PII. Low risk.</p>
+
+      <p class="play-line"><strong class="play-char char-sissy">Sissy:</strong> Wait, what's XSS?</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Cross-site scripting. It's when an attacker injects malicious code into a web page. Maya's team prevents it by never putting raw user text into HTML without escaping it first.</p>
+
+      <p class="play-line"><strong class="play-char char-sissy">Sissy:</strong> Oh! So when I type a subnet name, they make sure it can't contain code that runs?</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Exactly. Every name, description, and note gets escaped before it touches the DOM.</p>
+
+      <!-- ── SCENE 3 ── -->
+      <h3 class="play-scene">Scene 3: UX &amp; Accessibility (4:17 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> I reviewed every CSS file and the interaction layer. Let me start with what's good: the app uses CSS custom properties for theming &mdash; <code>tokens.css</code> defines the full dark/light palette. There are 11 color themes. aria-labels are on buttons, the table has proper labeling, and the about page uses proper <code>role="tablist"</code> and <code>aria-selected</code>.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> But here's what's missing. The main table has no skip navigation. A screen reader user hitting this page gets the header, then the controls, then the table &mdash; with no way to jump to the content.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> Focus management on re-render is partially handled &mdash; the orchestrator saves and restores focus to the active input. But when you split a subnet, focus doesn't move to the new rows. A sighted user sees them appear; a screen reader user has no idea what happened.</p>
+
+      <p class="play-line"><strong class="play-char char-sissy">Sissy:</strong> I actually experienced this! I split a subnet and had to scroll to find the new rows. If I were using a keyboard only, I'd be lost.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> Exactly. After split/join, focus should move to the affected row, and there should be a live region announcement like "Subnet split into /25 and /25."</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> Color contrast &mdash; the row tinting uses 20% alpha hex overlays. On some themes, particularly Neon and Polar, the text contrast against the tinted background drops below WCAG AA (4.5:1). Nobody's measured this systematically.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> That 20% was chosen by eyeball, not calculation. We should actually run the contrast ratios for every theme combination.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> Mobile experience &mdash; the table doesn't horizontally scroll smoothly on phones. With 8+ columns visible, it becomes a pinch-zoom mess. Consider a sticky first column or a card layout for mobile.</p>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> On the topic of mobile &mdash; is there any onboarding for first-time users? I see the hero animation types a demo subnet, but it doesn't explain what's happening or why.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> That's a great point. The animation shows typing <code>192.168.0.0/24</code> but a novice doesn't know what <code>/24</code> means. There's no tooltip, no "What is CIDR?" link, no hint text.</p>
+
+      <p class="play-line"><strong class="play-char char-sissy">Sissy:</strong> I literally googled "what does /24 mean" the first time. If the placeholder said "e.g., 192.168.0.0/24 (256 addresses)" I'd have understood immediately.</p>
+
+      <!-- ── SCENE 4 ── -->
+      <h3 class="play-scene">Scene 4: Network Engineering (4:22 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> Let me talk about the subnet math. I went through <code>subnet.js</code>, <code>splitter.js</code>, <code>bitmask.js</code>, <code>ipv4.js</code>, <code>ipv6.js</code>, and all the test files. The math is correct. Bitwise operations are done properly. Network address normalization works. Broadcast calculation handles /31 point-to-point (RFC 3021) and /32 host routes correctly.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> The VLAN macro system is genuinely useful. <code>{o3}</code>, <code>{id}*100+{o3}</code>, <code>{seq 100:1}</code> &mdash; these are real patterns network teams use. The digit-slicing modifiers are a nice touch for complex VLAN schemes.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> Edge cases I checked: <code>0.0.0.0/0</code> works, /32 host routes handled correctly, /31 point-to-point correctly shows 2 usable (RFC 3021), IPv6 /128 /64 /48 all correct, v4-mapped IPv6 parsed correctly.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> What I'd want as a network engineer that's missing: Supernetting and aggregation. Overlap detection &mdash; if I add <code>10.0.0.0/16</code> and then <code>10.0.1.0/24</code> as separate trees, there's no warning. Import from route table output. And VLSM optimization.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> Overlap detection is a big one. Right now each tree is independent. The forest model doesn't cross-check. That's a real footgun for network design.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> The RFC range lookups in <code>constants.js</code> are comprehensive &mdash; RFC 1918, 5737, 6598, 3927, and IPv6 equivalents. When I split a subnet, I see "Private-Use (Class C)" for <code>192.168.0.0/24</code>. That's helpful.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> Justin, what about the test coverage on edge cases?</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> Tests cover /0 through /32 for IPv4, and /0 through /128 for IPv6. Class boundaries are tested. The one gap I noticed: no tests for what happens when you split a /32. Should be impossible &mdash; it's a host route. The UI probably prevents it, but there's no unit test asserting the error.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> That's my cue.</p>
+
+      <!-- ── SCENE 5 ── -->
+      <h3 class="play-scene">Scene 5: Test Quality (4:27 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> 553 tests across 15 files. Coverage enforced at 95% line, 90% branch in CI. The test-to-source ratio is 74.5%. For a 5K LOC project, that's excellent. But let me poke at the quality.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> First, the tests are all for <code>src/js/core/</code>. The entire view layer &mdash; 16 modules, roughly 2,700 lines &mdash; has zero automated tests. That's half the codebase untested.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> By design. Views are DOM-heavy. We'd need a browser testing framework, which means a dependency &mdash; and the project has zero npm dependencies. That's a core principle.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> I respect the zero-dependency stance, but "by design" doesn't mean "without risk." The rendering logic is where user-facing bugs live. At minimum, you could test the pure functions in view modules &mdash; <code>formatCellValue()</code>, <code>computeJoinBars()</code>, <code>escapeHtml()</code> &mdash; in Node without a DOM.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> She's right. <code>escapeHtml()</code> is your XSS barrier and it has zero dedicated tests.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> That's a fair gap. <code>escapeHtml</code> and <code>formatCellValue</code> could absolutely be tested in Node.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> Second &mdash; there's no fuzzing or property-based testing for config import. For a tool that accepts arbitrary JSON config files, a round of fuzzing would catch edge cases the hand-written tests miss.</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> From an ops perspective, could a malformed config crash the page? Like, what happens if someone crafts a config with 499 nodes arranged in a pathological tree?</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> The 500-node limit prevents DoS-level configs. But 499 deeply nested nodes would produce a very tall table. The render would be slow but not crashing. We don't have a depth limit, only a node count limit.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> Worth noting. A config with 499 nodes at depth 499 would produce a join column with 499 levels. The computation iterates the tree &mdash; O(n) &mdash; so it wouldn't explode. But the DOM would be huge.</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> Maybe add a depth limit? Or a rendering cutoff?</p>
+
+      <!-- ── SCENE 6: THE BEER ROUND ── -->
+      <h3 class="play-scene">The Beer Round (4:30 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-lead">Team Lead:</strong> Alright, I'm calling for a round. Everyone gets a pint. And with the truth serum flowing &mdash; what's the thing that keeps you up at night about this codebase?</p>
+
+      <p class="play-dir">(Beers arrive: IPAs, a stout, a lager, and a cider for Sissy.)</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> The 300ms magic number in the hero fade. And the fact that CSS animation duration is coupled to a JavaScript setTimeout by convention, not by code. Someone changes the CSS to 200ms, the JS still waits 300ms, and you get a blank flash.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> The <code>localStorage</code> autosave has no integrity check. If someone tampers with it &mdash; inject a crafted config via browser devtools &mdash; the app silently loads it. <code>validateConfig()</code> catches structural issues, but a structurally valid config with misleading data loads clean. Consider a checksum.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> The lack of overlap detection. A junior engineer could use this tool, create two trees with overlapping address space, export the config, and paste it into their router configs. The tool gives them false confidence. That's a real-world harm vector.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> The VLAN column shows "Error" with a tooltip explaining why, but the tooltip requires hovering. On mobile, there's no hover. Users see "Error" with no explanation.</p>
+
+      <p class="play-line"><strong class="play-char char-sissy">Sissy:</strong> I don't know what any of the column headers mean. "Netmask"? "Wildcard"? "Usable"? There are no tooltips on the headers. I have to leave the app and google every term.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> The autosave <code>catch</code> block warns once and then silently fails forever. If localStorage fills up mid-session, the user thinks their work is being saved. It's not. They close the tab, come back, and their last 30 minutes of work are gone.</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> The CI pipeline downloads Node on every run because the shell executor has no pre-installed runtime. That's fragile &mdash; if the Node CDN is down or rate-limits you, your entire pipeline is dead.</p>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> The about page is genuinely beautiful &mdash; 7 tabs, war stories, architecture diagrams, the whole history. But none of that educational content is accessible from the main app. A first-time user has to independently discover it. There should be a "Getting Started" hint on first visit.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> All of these are real. The overlap detection one especially &mdash; Justin's right, that's a user-harm scenario, not just a missing feature.</p>
+
+      <!-- ── SCENE 7: OPEN DISCUSSION ── -->
+      <h3 class="play-scene">Scene 7: Open Discussion (4:35 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> Maya, the about page mentions the codebase stats &mdash; module counts, line counts, test count. Are those updated automatically?</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> No, manually. They might be slightly stale.</p>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> That's a maintenance burden. Could the build script compute them and inject them?</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> That's easy. Count the lines in the build step, template the number into the HTML.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> While we're talking about the build &mdash; the cache busting strategy requires manually bumping <code>?v=N</code> query strings. That's human error waiting to happen. The build step should auto-hash filenames.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> We've fumbled the cache bump at least twice &mdash; changed CSS, forgot the bump, users got stale styles.</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> Content-hash filenames in the build step. <code>main.a3f2b1.js</code>. Zero human involvement, perfect cache invalidation every time.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> Can I circle back to the dead <code>attachAboutHandler()</code> function? The real question is: how did it survive? The preflight check doesn't scan for dead exports. A CI check for unused exports would prevent this category of rot.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> We don't have a linter. No eslint, no prettier. The CLAUDE.md rules are enforced by AI agent discipline and the preflight script.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> You could write a 20-line shell script that greps for <code>export function</code> and then checks if each one is imported somewhere. Zero dependencies, runs in CI.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> I want to revisit one thing. The <code>showCode()</code> function in <code>about.js</code> fetches source files. In dev and on staging, individual JS files exist. But in production on Cloudflare Pages, everything is bundled into one file. The code viewer on the about page shows "Could not load source file" in production.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> So it's a dead feature in production?</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> Effectively yes. It works locally and on staging where individual JS files exist, but not on Cloudflare Pages where everything is bundled.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> That's bad UX. The "See the Code" tab has clickable module boxes that promise to show source code. In production, every single one fails silently. Users think it's broken.</p>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> Either fix it &mdash; ship source files to production &mdash; or remove the click-to-view feature and just link to the Git repo.</p>
+
+      <!-- ── SCENE 8: WHAT COULD GO WRONG ── -->
+      <h3 class="play-scene">Scene 8: What Could Go Really Wrong? (4:40 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-lead">Team Lead:</strong> Last round before we wrap. Everyone name one thing that could go really wrong.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> Overlap detection again. A network engineer trusts this tool, deploys overlapping subnets to production routers, causes a routing loop. Real outage. Real money.</p>
+
+      <p class="play-line"><strong class="play-char char-cucumber">Cucumber:</strong> A crafted config file shared between colleagues. Config validation is good, but if someone finds a bypass &mdash; a structurally valid config with XSS in a name field that somehow survives <code>escapeHtml()</code> &mdash; it's a stored XSS vector.</p>
+
+      <p class="play-line"><strong class="play-char char-pablo">Pablo:</strong> The undo system captures the entire forest state as a JSON snapshot 50 times. With a large config, that's 50 copies of a large object in memory. No garbage collection hint, no cap on total memory. A long session could cause the tab to slow or crash.</p>
+
+      <p class="play-line"><strong class="play-char char-roxy">Roxy:</strong> A CI regression where the coverage check silently stops enforcing. If the Node version changes and the coverage flag becomes a no-op, coverage drops without anyone noticing.</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> The staging server goes down and nobody notices because there's no monitoring. The smoke test runs once after deploy, but there's no ongoing health check.</p>
+
+      <p class="play-line"><strong class="play-char char-franklin">Franklin:</strong> A colorblind user can't distinguish the subnet rows because color is the only differentiator. No pattern, no icon, no text indicator.</p>
+
+      <p class="play-line"><strong class="play-char char-sissy">Sissy:</strong> A beginner loads the tool, doesn't understand CIDR notation, types "192.168.1" without a prefix, gets a /32 host route, splits it, gets an error they don't understand, and closes the tab forever.</p>
+
+      <p class="play-line"><strong class="play-char char-nkechi">Nkechi:</strong> The about page gets stale. It promises to be a living document but depends on AI agents remembering to update it. Six months from now, the stats are wrong and the stories are from last year.</p>
+
+      <p class="play-line"><strong class="play-char char-tomas">Tomas:</strong> One more &mdash; the pipeline manual gate for production deploy. If the team grows and multiple people push to main, the gate could stack up with multiple pending deploys, and someone clicks the wrong one.</p>
+
+      <!-- ── CLOSING ── -->
+      <h3 class="play-scene">Closing (4:42 PM)</h3>
+
+      <p class="play-line"><strong class="play-char char-lead">Team Lead:</strong> Excellent session. Let me summarize: 29 findings. One critical &mdash; overlap detection is a user-harm risk. Five high &mdash; the god object, missing view tests, mobile UX, focus management, and cache busting. Ten medium, thirteen low. And thirteen things done right that deserve recognition.</p>
+
+      <p class="play-line"><strong class="play-char char-maya">Maya:</strong> Honest assessment: the bones are solid. The architecture is clean, the separation of concerns holds, the test coverage on core logic is real. But we've been so focused on the math being right that we've neglected the human experience &mdash; both for users and for maintainers. The overlap detection gap is the scariest thing Justin raised. Everything else is polish. That one is a real-world harm vector.</p>
+
+      <p class="play-line"><strong class="play-char char-justin">Justin:</strong> To the subnets that don't overlap.</p>
+
+      <p class="play-line"><strong class="play-char char-lead">Everyone:</strong> Cheers.</p>
+
+      <p class="play-dir">(End of transcript. Session concluded at 4:45 PM. Two pitchers consumed. Zero production incidents caused.)</p>
+
+      <h3>Findings Status</h3>
+      <p>
+        The review produced 29 findings. Here is every finding and its current
+        status &mdash; <strong>26 fixed, 3 not fixed</strong>.
+      </p>
+
+      <table class="data-table findings-table">
+        <thead><tr><th>#</th><th>Severity</th><th>Finding</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>F-01</td><td>Critical</td><td>Overlap detection</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-02</td><td>High</td><td>Split splitter-view.js</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-03</td><td>High</td><td>View layer tests</td><td class="status-open">Not Fixed</td></tr>
+          <tr><td>F-04</td><td>High</td><td>Focus management after split/join</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-05</td><td>High</td><td>Mobile sticky column</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-06</td><td>High</td><td>Auto-hash cache busting</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-07</td><td>Medium</td><td>about.js path validation</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-08</td><td>Medium</td><td>Color contrast</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-09</td><td>Medium</td><td>Autosave re-warning</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-10</td><td>Medium</td><td>Column header tooltips</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-11</td><td>Medium</td><td>Undo memory cap</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-12</td><td>Medium</td><td>VLAN error inline</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-13</td><td>Medium</td><td>CI Node download</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-14</td><td>Medium</td><td>Color-assign duplication</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-15</td><td>Medium</td><td>escapeHtml test</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-16</td><td>Medium</td><td>Code viewer in production</td><td class="status-open">Not Fixed</td></tr>
+          <tr><td>F-17</td><td>Low</td><td>Magic numbers</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-18</td><td>Low</td><td>CSS/JS animation coupling</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-19</td><td>Low</td><td>Skip navigation link</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-20</td><td>Low</td><td>localStorage integrity check</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-21</td><td>Low</td><td>First-time onboarding</td><td class="status-open">Not Fixed</td></tr>
+          <tr><td>F-22</td><td>Low</td><td>Auto-compute about stats</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-23</td><td>Low</td><td>Depth limit</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-24</td><td>Low</td><td>/32 split test</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-25</td><td>Low</td><td>Dead export cleanup</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-26</td><td>Low</td><td>Unused export detection CI</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-27</td><td>Low</td><td>Colorblind differentiators</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-28</td><td>Low</td><td>Educational placeholder</td><td class="status-fixed">Fixed</td></tr>
+          <tr><td>F-29</td><td>Low</td><td>Staging monitoring</td><td class="status-fixed">Fixed</td></tr>
+        </tbody>
+      </table>
+
+    </section>
+
+  </main>
+
+  <footer class="about-footer">
+    <p>
+      &copy; 2026 slashwhat. Licensed under
+      <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>.
+      Free for non-commercial use. License must be preserved.
+    </p>
+  </footer>
+
+</div>
+
+<script type="module" src="js/about.js"></script>
+
+</body>
+</html>
