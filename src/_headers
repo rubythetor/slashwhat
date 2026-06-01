@@ -1,0 +1,35 @@
+# _headers — Cloudflare Pages response headers.
+# Security headers apply to all routes. Cache-control differentiates
+# between HTML (never cached) and static assets (immutable, versioned
+# via content-hashed filenames injected by the build script).
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'none'; frame-ancestors 'none'
+
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/about.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/docs.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/getting-started.html
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/img/*
+  Cache-Control: public, max-age=31536000, immutable

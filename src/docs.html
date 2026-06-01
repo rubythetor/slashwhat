@@ -1,0 +1,561 @@
+<!-- © 2026 slashwhat. MIT License. -->
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — slashwhat Subnet Calculator</title>
+  <meta name="description" content="Complete documentation for slashwhat visual subnet calculator. Column reference, VLAN macros, color modes, keyboard shortcuts, and save/export formats.">
+  <link rel="canonical" href="https://slashwhat.net/docs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://slashwhat.net/docs.html">
+  <meta property="og:title" content="Documentation — slashwhat Subnet Calculator">
+  <meta property="og:description" content="Column reference, VLAN macros, color modes, keyboard shortcuts, and save/export formats for slashwhat.">
+  <meta property="og:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="og:site_name" content="slashwhat">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation — slashwhat Subnet Calculator">
+  <meta name="twitter:description" content="Complete reference for slashwhat visual subnet calculator features.">
+  <meta name="twitter:image" content="https://slashwhat.net/img/og-image.png">
+  <meta property="article:published_time" content="2025-02-01">
+  <meta name="keywords" content="subnet calculator documentation, VLAN macros, column reference, keyboard shortcuts, CSV export, color themes">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Documentation — slashwhat Subnet Calculator",
+    "description": "Complete documentation for slashwhat visual subnet calculator. Column reference, VLAN macros, color modes, keyboard shortcuts, and save/export formats.",
+    "url": "https://slashwhat.net/docs.html",
+    "isPartOf": { "@type": "WebApplication", "name": "slashwhat", "url": "https://slashwhat.net/" }
+  }
+  </script>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <div class="ambient-bg" aria-hidden="true"></div>
+
+  <header class="app-header">
+    <div class="app-header-left">
+      <a href="index.html" class="about-logo-link">
+        <img src="img/logo.png" alt="slashwhat" class="app-logo">
+      </a>
+    </div>
+    <div class="header-right">
+      <a href="index.html" class="back-to-app">&larr; Return to app</a>
+      <div class="theme-toggle-wrapper">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <input type="checkbox" class="toggle" id="theme-toggle" aria-label="Toggle theme">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="about-content">
+
+    <h1 class="about-title">Documentation</h1>
+
+    <nav class="tab-bar" role="tablist">
+      <button class="tab active" role="tab" aria-selected="true" data-tab="columns">Columns</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="vlan">VLAN Macros</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="colors">Colors</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="shortcuts">Keyboard Shortcuts</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="save">Save &amp; Export</button>
+    </nav>
+
+    <!-- ══════════════════════════════════════════ COLUMNS ══════ -->
+    <section class="tab-panel active" id="panel-columns" role="tabpanel">
+
+      <h2>Column reference</h2>
+      <p>
+        The splitter table has 12 columns. By default only a subset is visible.
+        Hover the header row to reveal controls for hiding, showing, and
+        reordering columns. Hidden columns appear in a collapsed bar above the
+        header &mdash; click any to restore it.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Column</th>
+            <th>Description</th>
+            <th>Default</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Subnet</code></td>
+            <td>The CIDR notation of the subnet (e.g. <code>10.0.0.0/24</code>). This is the primary identifier for each row.</td>
+            <td>Visible</td>
+          </tr>
+          <tr>
+            <td><code>Name</code></td>
+            <td>A user-assigned label. In automatic naming mode, shows the full hierarchical path (e.g. "Servers-Web-1"). In manual mode, shows only the leaf label. Click to edit.</td>
+            <td>Visible</td>
+          </tr>
+          <tr>
+            <td><code>Description</code></td>
+            <td>A short description for the subnet entry. Click the placeholder to add text. Useful for documenting the purpose of a subnet ("Core switches", "Guest Wi-Fi").</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>Notes</code></td>
+            <td>A longer free-text field. Supports multi-line content. Display settings let you control the number of visible lines (1, 2, 3, or all) and font size (normal, small, smallest).</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>VLAN</code></td>
+            <td>VLAN ID computed from a macro template. See the <strong>VLAN Macros</strong> tab for the full expression language. Shows "Error" with a tooltip when the expression cannot be resolved.</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>Mask</code></td>
+            <td>The subnet mask in dotted-decimal notation (e.g. <code>255.255.255.0</code> for a /24). For IPv6 subnets, shows the prefix length.</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>Wildcard</code></td>
+            <td>The inverse of the subnet mask (e.g. <code>0.0.0.255</code> for a /24). Used in ACLs on some router platforms.</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>Range</code></td>
+            <td>The network address to broadcast address range. Display style is configurable: <strong>short</strong> (only shows the differing octets of the end address) or <strong>full</strong> (shows both addresses completely). The separator between addresses is also configurable.</td>
+            <td>Visible</td>
+          </tr>
+          <tr>
+            <td><code>Usable</code></td>
+            <td>The first usable host to last usable host range. Same display options as Range. For /31 point-to-point links (RFC 3021), both addresses are usable. For /32 host routes, usable matches the single address.</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>IPs</code></td>
+            <td>Total number of IP addresses in the subnet (including network and broadcast). Number format is configurable: <strong>locale</strong> ("4,096"), <strong>SI</strong> ("4K"), <strong>SI.1</strong> ("4.1K"), or <strong>raw</strong> ("4096").</td>
+            <td>Visible</td>
+          </tr>
+          <tr>
+            <td><code>Hosts</code></td>
+            <td>Number of usable host addresses (total minus network and broadcast). Same number format options as IPs.</td>
+            <td>Hidden</td>
+          </tr>
+          <tr>
+            <td><code>Split/Join</code></td>
+            <td>Action column. <span style="color:#16a34a">Split</span> divides a subnet into two equal halves. <span style="color:#ef4444">Join</span> merges two sibling subnets back into their parent. The join column uses colored bars to show the tree hierarchy.</td>
+            <td>Visible</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Column controls</h3>
+      <p>
+        Hover the table header row to reveal controls on each column:
+      </p>
+      <ul class="feature-list">
+        <li><strong>Hide</strong> &mdash; click the up-arrow button above a column label to hide it</li>
+        <li><strong>Reorder</strong> &mdash; click the left/right arrow buttons to move a column</li>
+        <li><strong>Restore</strong> &mdash; hidden columns appear in a bar above the header; click one to restore it</li>
+        <li><strong>Reset</strong> &mdash; the reset button in the hidden-columns bar restores the default column layout</li>
+        <li><strong>Settings</strong> &mdash; columns with a "settings" label (Range, Usable, IPs, Hosts, Notes, Name, VLAN) open a format picker when clicked</li>
+      </ul>
+
+      <h3>Range display styles</h3>
+      <table class="data-table">
+        <thead><tr><th>Style</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>Short</td><td><code>10.0.0.0 - .255</code></td></tr>
+          <tr><td>Full</td><td><code>10.0.0.0 - 10.0.0.255</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Number formats</h3>
+      <table class="data-table">
+        <thead><tr><th>Format</th><th>Example (4096)</th></tr></thead>
+        <tbody>
+          <tr><td>Locale</td><td><code>4,096</code></td></tr>
+          <tr><td>SI</td><td><code>4K</code></td></tr>
+          <tr><td>SI.1</td><td><code>4.1K</code></td></tr>
+          <tr><td>Raw</td><td><code>4096</code></td></tr>
+        </tbody>
+      </table>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════ VLAN MACROS ══════ -->
+    <section class="tab-panel" id="panel-vlan" role="tabpanel">
+
+      <h2>VLAN Macro Language (VML)</h2>
+      <p>
+        The VLAN column uses a small expression language called VML. Instead of
+        manually typing a VLAN ID for every subnet, you write a template like
+        <code>100 + {o3}</code> and the system evaluates it for each row,
+        substituting variables with values from that row's subnet.
+      </p>
+      <p>
+        Templates are set globally via the VLAN column settings menu. Each
+        tree section can also override the global template with its own.
+      </p>
+
+      <div class="concept-card">
+        <h3>Variables</h3>
+        <p>
+          Variables are enclosed in curly braces. They resolve to numeric values
+          based on the subnet's network address, prefix length, or metadata.
+        </p>
+        <table class="data-table">
+          <thead><tr><th>Variable</th><th>Description</th><th>Example (10.0.5.128/26)</th></tr></thead>
+          <tbody>
+            <tr><td><code>{o1}</code></td><td>First octet of the network address</td><td>10</td></tr>
+            <tr><td><code>{o2}</code></td><td>Second octet</td><td>0</td></tr>
+            <tr><td><code>{o3}</code></td><td>Third octet</td><td>5</td></tr>
+            <tr><td><code>{o4}</code></td><td>Fourth octet</td><td>128</td></tr>
+            <tr><td><code>{o3 l}</code></td><td>Left digit of third octet</td><td>0 (from "5")</td></tr>
+            <tr><td><code>{o3 r}</code></td><td>Right digit of third octet</td><td>5</td></tr>
+            <tr><td><code>{o3 ll}</code></td><td>Left two digits of third octet</td><td>NaN (single digit)</td></tr>
+            <tr><td><code>{o3 rr}</code></td><td>Right two digits of third octet</td><td>5</td></tr>
+            <tr><td><code>{mask}</code></td><td>CIDR prefix length</td><td>26</td></tr>
+            <tr><td><code>{id}</code></td><td>Section ID (parsed as integer)</td><td>Depends on entry</td></tr>
+            <tr><td><code>{seq S:N}</code></td><td>Sequential generator: S + N * leafIndex</td><td>Varies by row</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-card">
+        <h3>Operators</h3>
+        <p>
+          VML supports three arithmetic operators. Evaluation is strictly
+          left-to-right (no operator precedence). Adjacent tokens with no
+          operator are concatenated as strings.
+        </p>
+        <table class="data-table">
+          <thead><tr><th>Operator</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>Addition</td></tr>
+            <tr><td><code>-</code></td><td>Subtraction</td></tr>
+            <tr><td><code>*</code></td><td>Multiplication</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-card">
+        <h3>Examples</h3>
+        <table class="data-table">
+          <thead><tr><th>Template</th><th>Input subnet</th><th>Result</th></tr></thead>
+          <tbody>
+            <tr><td><code>{o3}</code></td><td>10.0.5.0/24</td><td>5</td></tr>
+            <tr><td><code>100+{o3}</code></td><td>10.0.5.0/24</td><td>105</td></tr>
+            <tr><td><code>{o3}*100+{o4}</code></td><td>10.0.5.128/26</td><td>628</td></tr>
+            <tr><td><code>{seq 100:1}</code></td><td>(any, row 0)</td><td>100</td></tr>
+            <tr><td><code>{seq 100:1}</code></td><td>(any, row 1)</td><td>101</td></tr>
+            <tr><td><code>{seq 100:1}</code></td><td>(any, row 2)</td><td>102</td></tr>
+            <tr><td><code>{id}*100+{o3}</code></td><td>10.0.5.0/24, ID=2</td><td>205</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="concept-card">
+        <h3>Presets</h3>
+        <p>
+          The VLAN settings menu includes preset templates for common patterns:
+        </p>
+        <table class="data-table">
+          <thead><tr><th>Preset</th><th>Template</th></tr></thead>
+          <tbody>
+            <tr><td>Third Octet</td><td><code>{o3}</code></td></tr>
+            <tr><td>Site + Octet</td><td><code>{id}*100+{o3}</code></td></tr>
+            <tr><td>Site Offset</td><td><code>{id}+{o3}</code></td></tr>
+            <tr><td>Sequential</td><td><code>{seq 100:1}</code></td></tr>
+            <tr><td>Octet Base 100</td><td><code>{o3}+100</code></td></tr>
+            <tr><td>Fourth Octet</td><td><code>{o4}+{mask}</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Per-section override</h3>
+      <p>
+        Each tree section (entry) can override the global VLAN template. Open
+        the VLAN settings from the column header, then choose "Per-section" to
+        set a different template for specific sections. This is useful when
+        different parts of your network use different VLAN schemes.
+      </p>
+
+      <h3>Validation</h3>
+      <p>
+        VML validates that the computed result is an integer between 1 and 4094
+        (the valid VLAN range). VLANs 1002&ndash;1005 are flagged with a
+        warning because they are reserved for FDDI and Token Ring. Results that
+        fall outside the valid range or produce non-integer values display
+        "Error" in the cell with a tooltip explaining the problem.
+      </p>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════ COLORS ══════ -->
+    <section class="tab-panel" id="panel-colors" role="tabpanel">
+
+      <h2>Color modes and themes</h2>
+      <p>
+        Row colors are controlled by two settings: a <strong>color mode</strong>
+        (which rows share colors) and a <strong>color theme</strong> (which
+        palette is used). Both are accessible from the controls below the table.
+      </p>
+
+      <h3>Color modes</h3>
+
+      <div class="concept-card">
+        <h3>Sibling</h3>
+        <p>
+          Mergeable sibling pairs share a color from the palette. Colors cycle
+          through the theme and restart per tree section. This is the default
+          mode &mdash; it visually groups pairs that can be joined.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Siblings &amp; Cousins</h3>
+        <p>
+          Consecutive rows at the same prefix length share a color. Groups
+          subnets at the same depth in the tree, regardless of whether they
+          are direct siblings.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Cycle</h3>
+        <p>
+          Each row gets the next palette color sequentially, wrapping around at
+          the end. Unlike Sibling (which pairs mergeable neighbors) or Cousins
+          (which groups by depth), Cycle assigns one color per row regardless
+          of tree structure.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Alternating Colors</h3>
+        <p>
+          Rows alternate between two user-chosen colors. Pick any two colors
+          from the color controls. Useful for a clean, simple look without
+          tree-structure information.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Zebra</h3>
+        <p>
+          Classic gray/white alternating stripes. Ignores the theme palette
+          entirely and adapts to dark or light mode automatically.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Manual</h3>
+        <p>
+          Each row can be assigned a custom color individually. A paint bucket
+          icon appears on each row for color selection. Rows without a manual
+          color fall back to zebra stripes.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>None</h3>
+        <p>
+          All rows use a uniform gray. No color differentiation. Useful for
+          export or when colors are distracting.
+        </p>
+      </div>
+
+      <h3>Color themes</h3>
+      <p>
+        Themes provide a palette of 8 colors used by the Sibling and Cousins
+        modes. The active theme also tints the ambient background on the about
+        and docs pages.
+      </p>
+      <table class="data-table">
+        <thead><tr><th>Theme</th><th>Character</th></tr></thead>
+        <tbody>
+          <tr><td>Pastel</td><td>Soft blues, pinks, greens &mdash; the default</td></tr>
+          <tr><td>Moody</td><td>Deep purples and grays</td></tr>
+          <tr><td>Neon</td><td>Bright cyan, pink, lime</td></tr>
+          <tr><td>Mid-Mod</td><td>Warm amber, teal, red &mdash; mid-century modern</td></tr>
+          <tr><td>Terminal</td><td>Green, cyan, yellow &mdash; retro terminal</td></tr>
+          <tr><td>Rainbow</td><td>Full spectrum: red through violet</td></tr>
+          <tr><td>Forest</td><td>Deep greens and browns</td></tr>
+          <tr><td>Ocean</td><td>Blues and teals</td></tr>
+          <tr><td>Mountain</td><td>Warm and cool grays</td></tr>
+          <tr><td>Desert</td><td>Ambers, oranges, reds</td></tr>
+          <tr><td>Polar</td><td>Ice blues and whites</td></tr>
+          <tr><td>Canada</td><td>Reds and pinks</td></tr>
+          <tr><td>USA</td><td>Blues and reds</td></tr>
+          <tr><td>Nigeria</td><td>Greens</td></tr>
+          <tr><td>Cuba</td><td>Blues and reds</td></tr>
+          <tr><td>India</td><td>Orange, green, blue</td></tr>
+          <tr><td>South Korea</td><td>Red, blue, gray</td></tr>
+        </tbody>
+      </table>
+
+      <h3>How to change</h3>
+      <p>
+        The color mode picker and theme picker are in the controls area below
+        the subnet table. Select a mode from the dropdown, then choose a theme
+        from the palette grid. Changes apply instantly and are autosaved.
+      </p>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════ SHORTCUTS ══════ -->
+    <section class="tab-panel" id="panel-shortcuts" role="tabpanel">
+
+      <h2>Keyboard shortcuts</h2>
+      <p>
+        The app supports undo and redo via standard keyboard shortcuts. All
+        other actions (split, join, edit names) are click-based.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Mac</th>
+            <th>Windows / Linux</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Undo</td>
+            <td><code>Cmd+Z</code></td>
+            <td><code>Ctrl+Z</code></td>
+          </tr>
+          <tr>
+            <td>Redo</td>
+            <td><code>Cmd+Shift+Z</code></td>
+            <td><code>Ctrl+Shift+Z</code></td>
+          </tr>
+          <tr>
+            <td>Redo (alt)</td>
+            <td><code>Cmd+Y</code></td>
+            <td><code>Ctrl+Y</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="concept-card">
+        <h3>Undo/Redo details</h3>
+        <p>
+          The undo system maintains an 8-level in-memory stack. Every action
+          (split, join, edit a name, change a color, reorder columns) captures
+          a full state snapshot. Undo restores the previous snapshot; redo
+          reverses the undo.
+        </p>
+        <p>
+          Taking a new action after undoing clears the redo stack &mdash; the
+          standard behavior users expect. The undo/redo state is held in memory
+          only and does not persist across page reloads.
+        </p>
+      </div>
+
+      <h3>Future shortcuts</h3>
+      <p>
+        Split and join operations are currently click-only. There are no
+        keyboard shortcuts for navigating between rows or triggering
+        split/join from the keyboard.
+      </p>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════ SAVE & EXPORT ══════ -->
+    <section class="tab-panel" id="panel-save" role="tabpanel">
+
+      <h2>Save, Load, and Export</h2>
+      <p>
+        All data lives in your browser. There is no server, no account, and no
+        cloud storage. The app provides four ways to persist and share your work.
+      </p>
+
+      <div class="concept-card">
+        <h3>Save</h3>
+        <p>
+          Downloads a <code>.json</code> configuration file containing your
+          complete state: all subnets, names, descriptions, notes, VLAN
+          settings, column order, visibility, color mode, and theme. The file
+          is typically 5&ndash;10 KB.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Load</h3>
+        <p>
+          Uploads a previously saved <code>.json</code> file and restores the
+          full state. The file is validated before loading: node count limits,
+          column allowlists, CIDR format checks, hex color validation, tree
+          topology verification, and cross-tree ID uniqueness are all enforced.
+          Invalid configs are rejected with an error message.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Export (CSV)</h3>
+        <p>
+          Downloads a <code>.csv</code> file with all currently visible columns.
+          Hidden columns are excluded. The export respects your active display
+          settings (range format, number format). CSV fields are escaped to
+          prevent formula injection in spreadsheet applications.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h3>Autosave</h3>
+        <p>
+          After every action, the complete state is serialized and written to
+          <code>localStorage</code>. Refresh the page or close and reopen the
+          tab &mdash; everything comes back exactly as you left it. No manual
+          save required.
+        </p>
+        <p>
+          Autosave is purely local to your browser. Clearing browser data or
+          switching browsers will lose the autosaved state. Use the Save button
+          to create a portable backup.
+        </p>
+      </div>
+
+      <h3>Config file format</h3>
+      <p>
+        The JSON config contains a top-level object with these keys:
+      </p>
+      <table class="data-table">
+        <thead><tr><th>Key</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>entries</code></td><td>Array of tree entries, each with a CIDR root, section ID, name, and a nested array of leaf nodes with subnet, label, description, notes, and color data</td></tr>
+          <tr><td><code>columnOrder</code></td><td>Array of column keys in display order</td></tr>
+          <tr><td><code>visibleColumns</code></td><td>Array of column keys that are currently visible</td></tr>
+          <tr><td><code>colorConfig</code></td><td>Object with mode, theme, and alternating color settings</td></tr>
+          <tr><td><code>rangeDisplay</code></td><td>Display style settings for Range and Usable columns</td></tr>
+          <tr><td><code>numberDisplay</code></td><td>Number format settings for IPs and Hosts columns</td></tr>
+          <tr><td><code>nameDisplay</code></td><td>Naming mode (automatic or manual)</td></tr>
+          <tr><td><code>vlanConfig</code></td><td>Global VLAN template and per-section overrides</td></tr>
+        </tbody>
+      </table>
+
+    </section>
+
+  </main>
+
+  <footer class="about-footer">
+    <p>
+      &copy; 2026 slashwhat. Licensed under
+      <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener">MIT License</a>.
+      Free for non-commercial use. License must be preserved.
+    </p>
+  </footer>
+
+</div>
+
+<script type="module" src="js/docs.js"></script>
+
+</body>
+</html>

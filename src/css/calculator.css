@@ -1,0 +1,395 @@
+/*\! © 2026 slashwhat. MIT License. */
+/* calculator.css — Splitter table core: structure, tree headers, join cells */
+
+/* ── Forest input row ──────────────────────────────── */
+
+.forest-input-row td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.forest-input {
+  width: 100%;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  outline: none;
+  transition: color var(--transition-fast);
+}
+
+.forest-input::placeholder {
+  color: var(--input-valid);
+}
+
+/* Section ID and Name inputs in the forest input row (name column) */
+.forest-input-sid,
+.forest-input-name {
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  outline: none;
+}
+
+.forest-input-sid {
+  width: 4ch;
+}
+
+.forest-input-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.forest-input-sid::placeholder,
+.forest-input-name::placeholder {
+  color: var(--text-muted);
+}
+
+/* Reuse validation feedback colors for sid/name inputs */
+.forest-input-sid.input-valid,
+.forest-input-name.input-valid {
+  color: var(--input-valid);
+}
+
+.forest-input-sid.input-invalid,
+.forest-input-name.input-invalid {
+  color: var(--input-invalid);
+}
+
+/* Flex wrapper inside the name td to lay out sid + name side by side */
+.forest-input-group {
+  display: flex;
+  gap: 0.5ch;
+  align-items: center;
+}
+
+/* Real-time validation feedback: green when valid, red when invalid */
+.forest-input.input-valid {
+  color: var(--input-valid);
+  border-color: var(--input-valid);
+}
+
+.forest-input.input-invalid {
+  color: var(--input-invalid);
+  border-color: var(--input-invalid);
+}
+
+/* ── Tree header rows ──────────────────────────────── */
+/* Fixed white-on-dark-gray in both themes so headers stand out
+   from the pastel data rows and remain consistent across themes. */
+
+.splitter-table .tree-header-cell {
+  background: #374151 !important;
+  color: #f1f5f9 !important;
+  font-weight: 500;
+  font-size: var(--header-font-size, 0.975rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* First data cell holds the chevron, needs relative positioning
+   so the chevron can be placed in the left margin via absolute. */
+.tree-header-first-cell {
+  position: relative;
+}
+
+/* Move arrows sit furthest left in the margin — click to reorder */
+.tree-header-arrows {
+  position: absolute;
+  left: -46px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1;
+}
+
+.tree-header-arrow {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 0.825rem;
+  padding: 0;
+  line-height: 1;
+}
+
+.tree-header-arrow:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.tree-header-arrow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.tree-header-arrow:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
+/* Last cell in tree header needs relative positioning so the
+   delete button can be placed in the right margin via absolute. */
+.tree-header-last-cell {
+  position: relative;
+}
+
+/* Delete button in the right margin */
+.tree-header-delete {
+  position: absolute;
+  right: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #b45555;
+  cursor: pointer;
+  font-size: 1.07rem;
+  padding: 0;
+  line-height: 1;
+  transition: color var(--transition-fast);
+}
+
+.tree-header-delete:hover {
+  color: #ff6b6b;
+}
+
+.tree-header-delete:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+
+/* Collapse chevron sits in the left margin outside the table */
+.tree-header-chevron {
+  position: absolute;
+  left: -24px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  font-size: 0.825rem;
+  padding: 0;
+  line-height: 1;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.tree-header-chevron:hover {
+  color: #f1f5f9;
+}
+
+.tree-header-chevron:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.tree-header-chevron.collapsed {
+  transform: translateY(-50%) rotate(0deg);
+}
+
+
+/* Warning badge — red-bordered yellow triangle with black exclamation
+   mark, used for overlap indicators and VLAN range errors (F-01). */
+.warning-badge {
+  display: inline-block;
+  width: 0.95em;
+  height: 0.85em;
+  margin-right: 0.25em;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+/* ── Splitter table ──────────────────────────────────── */
+
+.splitter-table {
+  width: 93%;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+.splitter-table th {
+  text-align: left;
+  padding: var(--cell-pad-v, 8px) var(--cell-pad-h, 12px);
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+}
+
+.splitter-table td {
+  padding: var(--cell-pad-v, 8px) var(--cell-pad-h, 12px);
+  font-family: var(--font-mono);
+  font-size: var(--row-font-size, 0.875rem);
+  color: var(--table-text);
+}
+
+/* Dark backgrounds need light foreground text for WCAG AA contrast (F-08). */
+.splitter-table tr.dark-bg td {
+  color: #f1f5f9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Alternating group marker: subtle left border so colorblind users can
+   distinguish sibling groups without relying on color alone (F-27). */
+.splitter-table tr.group-b td:first-child {
+  border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ── Below-table controls (padding, color mode, theme) ── */
+
+.table-below-controls {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.table-control-group {
+  white-space: nowrap;
+}
+
+/* Shortcut hint on its own line below the controls strip. */
+.table-control-hint {
+  text-align: center;
+  padding-bottom: 10px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.table-control-hint kbd {
+  font-family: var(--font-mono);
+  font-size: inherit;
+  padding: 1px 4px;
+  margin: 0 6px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+}
+
+/* Selected value shown below a control label (e.g. "Sibling" under COLOR MODE). */
+.control-value {
+  display: block;
+  font-weight: 400;
+  opacity: 0.6;
+  font-size: 0.6rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.padding-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.825rem;
+  padding: 0;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.padding-btn:hover {
+  color: var(--text-primary);
+}
+
+.padding-reset,
+.hdr-font-reset,
+.row-font-reset {
+  color: #b45555 !important;
+  font-size: 0.875rem;
+}
+
+.padding-reset:hover,
+.hdr-font-reset:hover,
+.row-font-reset:hover {
+  color: #ff6b6b !important;
+}
+
+/* Green divide links inside join cells — indicates "click to split" */
+.splitter-divide-link {
+  color: #16a34a;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.splitter-divide-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Join cells (specificity beats .splitter-table td) ── */
+/* No border on the base class — sub-classes add only the sides they need,
+   avoiding the 16-!important cascade the old approach required. */
+
+/* ── Simple mode: hide tree move arrows and font/padding controls ── */
+
+[data-simple-mode="true"] .tree-header-arrows { display: none; }
+[data-simple-mode="true"] .control-hdr-font,
+[data-simple-mode="true"] .control-row-font,
+[data-simple-mode="true"] .control-padding,
+[data-simple-mode="true"] .tooltip-toggle-label { display: none; }
+
+.splitter-table .splitter-join-cell {
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: transparent !important;
+  border: none;
+  /* Fixed compact padding — join cells hold icons, not data */
+  padding: 4px;
+}
+
+.splitter-table .splitter-join-cell.mergeable {
+  cursor: pointer;
+  color: var(--error);
+}
+
+.splitter-table .splitter-join-cell.mergeable:hover {
+  filter: brightness(0.92);
+}
+
+.splitter-table .splitter-hgroup-left {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+
+.splitter-table .splitter-hgroup-mid {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.splitter-table .splitter-hgroup-right {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}

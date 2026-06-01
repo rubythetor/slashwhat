@@ -1,0 +1,207 @@
+/*\! © 2026 slashwhat. MIT License. */
+/* layout.css — Page layout, header, main content */
+
+/* App layout */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header — logo left, config buttons + theme toggle right */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-xl);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Glowing orbs behind header and footer — theme-colored, slightly
+   more intense than the about page ambient layer. */
+.app-header::before,
+.app-footer::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: var(--orb-opacity);
+  pointer-events: none;
+  animation: header-orb-drift 60s ease-in-out infinite alternate;
+}
+
+.app-header::after,
+.app-footer::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: var(--orb-opacity);
+  pointer-events: none;
+  animation: header-orb-drift 75s ease-in-out infinite alternate-reverse;
+}
+
+.app-header::before {
+  width: 300px;
+  height: 300px;
+  top: -60%;
+  left: 5%;
+  background: var(--orb-c1);
+}
+
+.app-header::after {
+  width: 250px;
+  height: 250px;
+  top: -40%;
+  right: 10%;
+  background: var(--orb-c2);
+}
+
+@keyframes header-orb-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(10px, 5px) scale(1.05); }
+  100% { transform: translate(-8px, -3px) scale(0.97); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header::before,
+  .app-header::after,
+  .app-footer::before,
+  .app-footer::after {
+    animation: none;
+  }
+}
+
+.app-header-left {
+  flex-shrink: 0;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: var(--space-xl);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+/* View sections */
+.view-section {
+  display: none;
+}
+
+.view-section.active {
+  display: block;
+}
+
+/* Skip link — visible only on focus for keyboard users (a11y) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border: 2px solid var(--border);
+  border-radius: 0 0 6px 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* Footer — subtle site navigation and license */
+.app-footer {
+  padding: 16px var(--space-xl) 24px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.app-footer::before {
+  width: 280px;
+  height: 280px;
+  bottom: -60%;
+  right: 8%;
+  background: var(--orb-c1);
+}
+
+.app-footer::after {
+  width: 220px;
+  height: 220px;
+  bottom: -40%;
+  left: 12%;
+  background: var(--orb-c2);
+}
+
+.app-footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.app-footer-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  transition: color var(--transition-fast);
+}
+
+.app-footer-nav a:hover { color: var(--text-primary); }
+
+.app-footer-nav .load-example-link {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.app-footer-nav .load-example-link:hover { color: var(--text-primary); }
+
+.footer-sep { color: var(--text-muted); font-size: 0.85rem; }
+
+/* Version tag sits inline with the copyright — sized down and
+   translucent so it reads as metadata, not content. */
+#app-version {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.app-footer p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.app-footer p a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.app-footer p a:hover { text-decoration: underline; }
+
+.footer-disclaimer {
+  margin-top: 8px !important;
+  font-size: 0.9rem !important;
+  color: var(--text-primary) !important;
+}
+
+.footer-disclaimer::before {
+  content: '\26A0\FE0F';
+  margin-right: 6px;
+}
